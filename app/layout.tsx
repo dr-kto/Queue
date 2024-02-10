@@ -12,7 +12,7 @@ const poppins = Poppins({
 
 export const metadata: Metadata = {
     title: 'Queue',
-    description: 'Queue is a platform for event management.',
+    description: 'Keep in Queue for Exciting Updates!"',
     icons: {
         icon: '/assets/images/logo.svg',
     },
