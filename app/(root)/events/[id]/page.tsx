@@ -111,9 +111,9 @@ const EventDetails = async ({
                             <p className="p-bold-20 text-grey-600">
                                 What You'll Learn:
                             </p>
-                            <pre className="p-medium-16 lg:p-regular-18">
+                            <p className="p-medium-16 lg:p-regular-18">
                                 {event.description}
-                            </pre>
+                            </p>
                             <p className="p-medium-16 lg:p-regular-18 truncate text-primary-500 underline">
                                 {event.url}
                             </p>
