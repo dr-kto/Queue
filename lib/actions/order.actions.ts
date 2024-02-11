@@ -20,6 +20,10 @@ export const checkoutOrder = async (order: CheckoutOrderParams) => {
 
     const price = order.isFree ? 0 : Number(order.price) * 100
 
+    if (price === 0) {
+        redirect(`${process.env.NEXT_PUBLIC_SERVER_URL}/profile`)
+    }
+
     try {
         const session = await stripe.checkout.sessions.create({
             line_items: [
