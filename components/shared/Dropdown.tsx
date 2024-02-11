@@ -51,6 +51,8 @@ const Dropdown = ({ value, onChangeHandler }: DropdownProps) => {
         getCategories()
     }, [])
 
+    const [isAlertOpen, setIsAlertOpen] = useState(false)
+
     return (
         <Select onValueChange={onChangeHandler} defaultValue={value}>
             <SelectTrigger className="select-field">
@@ -68,7 +70,7 @@ const Dropdown = ({ value, onChangeHandler }: DropdownProps) => {
                         </SelectItem>
                     ))}
 
-                <AlertDialog>
+                <AlertDialog open={isAlertOpen}>
                     <AlertDialogTrigger className="p-medium-14 flex w-full rounded-sm py-3 pl-8 text-primary-500 hover:bg-primary-50 focus:text-primary-500">
                         Add new category
                     </AlertDialogTrigger>
@@ -87,7 +89,11 @@ const Dropdown = ({ value, onChangeHandler }: DropdownProps) => {
                             </AlertDialogDescription>
                         </AlertDialogHeader>
                         <AlertDialogFooter>
-                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                            <AlertDialogCancel
+                                onClick={() => setIsAlertOpen(false)}
+                            >
+                                Cancel
+                            </AlertDialogCancel>
                             <AlertDialogAction
                                 onClick={() =>
                                     startTransition(handleAddCategory)
