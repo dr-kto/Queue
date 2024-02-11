@@ -75,7 +75,7 @@ const Dropdown = ({ value, onChangeHandler }: DropdownProps) => {
                         Add new category
                     </AlertDialogTrigger>
                     <AlertDialogContent className="bg-white">
-                        <AlertDialogHeader>
+                        <AlertDialogHeader onClick={() => setIsAlertOpen(true)}>
                             <AlertDialogTitle>New Category</AlertDialogTitle>
                             <AlertDialogDescription>
                                 <Input
