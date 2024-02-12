@@ -13,11 +13,10 @@ const ChatsPage = async ({ searchParams }: SearchParamProps) => {
     const { sessionClaims } = auth()
     const userId = sessionClaims?.userId as string
 
-    const usersPage = Number(searchParams?.eventsPage) || 1
+    const usersPage = Number(searchParams?.usersPage) || 1
 
     const organizedEvents = await getEventsByUser({ userId, page: usersPage })
 
-    const page = Number(searchParams?.page) || 1
     const searchText = (searchParams?.query as string) || ''
     const category = (searchParams?.category as string) || ''
 
