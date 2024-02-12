@@ -8,7 +8,18 @@ import Order from '@/lib/database/models/order.model'
 import Event from '@/lib/database/models/event.model'
 import { handleError } from '@/lib/utils'
 
-import { CreateUserParams, UpdateUserParams } from '@/types'
+import Category from '@/lib/database/models/category.model'
+
+import {
+    CreateUserParams,
+    GetAllEventsParams,
+    GetAllUsersParams,
+    UpdateUserParams,
+} from '@/types'
+
+const getCategoryByName = async (name: string) => {
+    return Category.findOne({ name: { $regex: name, $options: 'i' } })
+}
 
 export async function createUser(user: CreateUserParams) {
     try {
@@ -33,6 +44,68 @@ export async function getUserById(userId: string) {
         handleError(error)
     }
 }
+// ****************
+// export async function getAllUsers({
+//     query,
+//     limit = 6,
+//     page,
+//     category,
+// }: GetAllUsersParams) {
+//     try {
+//         await connectToDatabase()
+
+//         const user = await User.find()
+
+//         if (!user) throw new Error('Users not found')
+//         return JSON.parse(JSON.stringify(user))
+//     } catch (error) {
+//         handleError(error)
+//     }
+// }
+
+export async function getAllUsers({
+    query,
+    limit = 6,
+    userId,
+    page,
+    category,
+}: GetAllUsersParams) {
+    try {
+        await connectToDatabase()
+
+        // const titleCondition = query
+        //     ? { title: { $regex: query, $options: 'i' } }
+        //     : {}
+        // const categoryCondition = category
+        //     ? await getCategoryByName(category)
+        //     : null
+        // const conditions = {
+        //     $and: [
+        //         titleCondition,
+        //         categoryCondition ? { category: categoryCondition._id } : {},
+        //     ],
+        // }
+
+        // const skipAmount = (Number(page) - 1) * limit
+        // const usersQuery = User.find(conditions)
+        const usersQuery = await User.find().sort({ createdAt: 'desc' })
+        // .skip(skipAmount)
+        // .limit(limit)
+
+        if (!usersQuery) throw new Error('Users not found')
+
+        // const events = await populateEvent(eventsQuery)
+        // const usersCount = await User.countDocuments(conditions)
+
+        return {
+            data: JSON.parse(JSON.stringify(usersQuery)),
+            // totalPages: Math.ceil(usersCount / limit),
+        }
+    } catch (error) {
+        handleError(error)
+    }
+}
+// *********************
 
 export async function updateUser(clerkId: string, user: UpdateUserParams) {
     try {
