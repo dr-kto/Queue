@@ -65,10 +65,10 @@ export async function getUserById(userId: string) {
 
 export async function getAllUsers({
     query,
-    limit = 6,
     userId,
-    page,
     category,
+    limit = 6,
+    page,
 }: GetAllUsersParams) {
     try {
         await connectToDatabase()

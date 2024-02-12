@@ -23,14 +23,15 @@ const ChatsPage = async ({ searchParams }: SearchParamProps) => {
 
     const users = await getAllUsers({
         query: searchText,
-        category,
         userId,
+        category,
+        limit: 2,
         page: usersPage,
-        limit: 6,
     })
-    console.log(users, '11111')
+    console.log(searchParams, 'jk')
+    // console.log(users, '11111')
 
-    console.log(organizedEvents?.data, 'dsfdfsd')
+    // console.log(organizedEvents?.data, 'dsfdfsd')
 
     return (
         <>
@@ -53,7 +54,7 @@ const ChatsPage = async ({ searchParams }: SearchParamProps) => {
                     emptyStateSubtext="don't worry, you'll find them!"
                     limit={3}
                     page={usersPage}
-                    urlParamName="eventsPage"
+                    urlParamName="usersPage"
                     totalPages={organizedEvents?.totalPages}
                 />
             </section>
