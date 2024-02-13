@@ -13,6 +13,7 @@ import { auth } from '@clerk/nextjs'
 import clsx from 'clsx'
 import Link from 'next/link'
 import React from 'react'
+import { usePathname } from 'next/navigation'
 
 const ChatsPage = async ({ searchParams }: SearchParamProps) => {
     // const { sessionClaims } = auth()
@@ -36,7 +37,7 @@ const ChatsPage = async ({ searchParams }: SearchParamProps) => {
     // console.log(users, '11111')
 
     // console.log(organizedEvents?.data, 'dsfdfsd')
-    const { isOpen } = useChat()
+    const { isOpen } = useChat() || usePathname() === '/chats'
 
     return (
         <div
