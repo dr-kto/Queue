@@ -1,88 +1,88 @@
-// import { NextResponse } from 'next/server'
+import { NextResponse } from 'next/server'
 
-// import getCurrentUser from '@/app/actions/getCurrentUser'
-// import { pusherServer } from '@/lib/pusher'
-// // import prisma from '@/lib/prismadb'
+import getCurrentUser from '@/app/actions/getCurrentUser'
+import { pusherServer } from '@/lib/pusher'
+// import prisma from '@/lib/prismadb'
 
-// interface IParams {
-//     chatId?: string
-// }
+interface IParams {
+    chatId?: string
+}
 
-// export async function POST(request: Request, { params }: { params: IParams }) {
-//     try {
-//         const currentUser = await getCurrentUser()
-//         const { chatId } = params
+export async function POST(request: Request, { params }: { params: IParams }) {
+    // try {
+    //     const currentUser = await getCurrentUser()
+    //     const { chatId } = params
 
-//         if (!currentUser?.id || !currentUser?.email) {
-//             return new NextResponse('Unauthorized', { status: 401 })
-//         }
+    //     if (!currentUser?.id || !currentUser?.email) {
+    //         return new NextResponse('Unauthorized', { status: 401 })
+    //     }
 
-//         // Find existing chat
-//         const chat = await prisma.chat.findUnique({
-//             where: {
-//                 id: chatId,
-//             },
-//             include: {
-//                 messages: {
-//                     include: {
-//                         seen: true,
-//                     },
-//                 },
-//                 users: true,
-//             },
-//         })
+    //     // Find existing chat
+    //     const chat = await prisma.chat.findUnique({
+    //         where: {
+    //             id: chatId,
+    //         },
+    //         include: {
+    //             messages: {
+    //                 include: {
+    //                     seen: true,
+    //                 },
+    //             },
+    //             users: true,
+    //         },
+    //     })
 
-//         if (!chat) {
-//             return new NextResponse('Invalid ID', { status: 400 })
-//         }
+    //     if (!chat) {
+    //         return new NextResponse('Invalid ID', { status: 400 })
+    //     }
 
-//         // Find last message
-//         const lastMessage =
-//             chat.messages[chat.messages.length - 1]
+    //     // Find last message
+    //     const lastMessage =
+    //         chat.messages[chat.messages.length - 1]
 
-//         if (!lastMessage) {
-//             return NextResponse.json(chat)
-//         }
+    //     if (!lastMessage) {
+    //         return NextResponse.json(chat)
+    //     }
 
-//         // Update seen of last message
-//         const updatedMessage = await prisma.message.update({
-//             where: {
-//                 id: lastMessage.id,
-//             },
-//             include: {
-//                 sender: true,
-//                 seen: true,
-//             },
-//             data: {
-//                 seen: {
-//                     connect: {
-//                         id: currentUser.id,
-//                     },
-//                 },
-//             },
-//         })
+    //     // Update seen of last message
+    //     const updatedMessage = await prisma.message.update({
+    //         where: {
+    //             id: lastMessage.id,
+    //         },
+    //         include: {
+    //             sender: true,
+    //             seen: true,
+    //         },
+    //         data: {
+    //             seen: {
+    //                 connect: {
+    //                     id: currentUser.id,
+    //                 },
+    //             },
+    //         },
+    //     })
 
-//         // Update all connections with new seen
-//         await pusherServer.trigger(currentUser.email, 'chat:update', {
-//             id: chatId,
-//             messages: [updatedMessage],
-//         })
+    //     // Update all connections with new seen
+    //     await pusherServer.trigger(currentUser.email, 'chat:update', {
+    //         id: chatId,
+    //         messages: [updatedMessage],
+    //     })
 
-//         // If user has already seen the message, no need to go further
-//         if (lastMessage.seenIds.indexOf(currentUser.id) !== -1) {
-//             return NextResponse.json(chat)
-//         }
+    //     // If user has already seen the message, no need to go further
+    //     if (lastMessage.seenIds.indexOf(currentUser.id) !== -1) {
+    //         return NextResponse.json(chat)
+    //     }
 
-//         // Update last message seen
-//         await pusherServer.trigger(
-//             chatId!,
-//             'message:update',
-//             updatedMessage
-//         )
+    //     // Update last message seen
+    //     await pusherServer.trigger(
+    //         chatId!,
+    //         'message:update',
+    //         updatedMessage
+    //     )
 
-//         return new NextResponse('Success')
-//     } catch (error) {
-//         console.log(error, 'ERROR_MESSAGES_SEEN')
-//         return new NextResponse('Error', { status: 500 })
-//     }
-// }
+    return new NextResponse('Success')
+    // } catch (error) {
+    //     console.log(error, 'ERROR_MESSAGES_SEEN')
+    //     return new NextResponse('Error', { status: 500 })
+    // }
+}

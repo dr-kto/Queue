@@ -1,63 +1,64 @@
-// import getCurrentUser from '@/app/actions/getCurrentUser'
-// import { NextResponse } from 'next/server'
+import getCurrentUser from '@/app/actions/getCurrentUser'
+import { NextResponse } from 'next/server'
 
-// // import prisma from '@/app/libs/prismadb'
-// import { pusherServer } from '@/lib/pusher'
+// import prisma from '@/app/libs/prismadb'
+import { pusherServer } from '@/lib/pusher'
 
-// interface IParams {
-//     chatId?: string
-// }
+interface IParams {
+    chatId?: string
+}
 
-// export async function DELETE(
-//     request: Request,
-//     { params }: { params: IParams }
-// ) {
-//     try {
-//         const { chatId } = params
-//         const currentUser = await getCurrentUser()
+export async function DELETE(
+    request: Request,
+    { params }: { params: IParams }
+) {
+    // try {
+    //     const { chatId } = params
+    //     const currentUser = await getCurrentUser()
 
-//         if (!currentUser?.id) {
-//             return NextResponse.json(null)
-//         }
+    //     if (!currentUser?.id) {
+    //         return NextResponse.json(null)
+    //     }
 
-//         const existingChat = await prisma.Chat.findUnique({
-//             where: {
-//                 id: chatId,
-//             },
-//             include: {
-//                 users: true,
-//             },
-//         })
+    //     const existingChat = await prisma.Chat.findUnique({
+    //         where: {
+    //             id: chatId,
+    //         },
+    //         include: {
+    //             users: true,
+    //         },
+    //     })
 
-//         if (!existingChat) {
-//             return new NextResponse('Invalid ID', { status: 400 })
-//         }
+    //     if (!existingChat) {
+    //         return new NextResponse('Invalid ID', { status: 400 })
+    //     }
 
-//         const deletedChat = await prisma.Chat.deleteMany({
-//             where: {
-//                 id: chatId,
-//                 userIds: {
-//                     hasSome: [currentUser.id],
-//                 },
-//             },
-//         })
+    //     const deletedChat = await prisma.Chat.deleteMany({
+    //         where: {
+    //             id: chatId,
+    //             userIds: {
+    //                 hasSome: [currentUser.id],
+    //             },
+    //         },
+    //     })
 
-//         existingChat.users.forEach((user) => {
-//             if (user.email) {
-//                 pusherServer.trigger(
-//                     user.email,
-//                     'Chat:remove',
-//                     existingChat
-//                 )
-//             }
-//         })
-//         // console.log(
-//         //     deletedChat,
-//         //     '---------------------------------------------------------------'
-//         // )
+    //     existingChat.users.forEach((user) => {
+    //         if (user.email) {
+    //             pusherServer.trigger(
+    //                 user.email,
+    //                 'Chat:remove',
+    //                 existingChat
+    //             )
+    //         }
+    //     })
+    //     // console.log(
+    //     //     deletedChat,
+    //     //     '---------------------------------------------------------------'
+    //     // )
 
-//         return NextResponse.json(deletedChat)
-//     } catch (error) {
-//         return NextResponse.json(null)
-//     }
-// }
+    return NextResponse.json({})
+    // return NextResponse.json(deletedChat)
+    // } catch (error) {
+    //     return NextResponse.json(null)
+    // }
+}
