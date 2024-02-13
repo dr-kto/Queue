@@ -1,6 +1,6 @@
 'use client'
 
-import useLinks from '@/app/hooks/useLinks'
+import useLinks from '@/lib/hooks/useLinks'
 // import { useRoutes } from '@/constants'
 import Link from 'next/link'
 import React from 'react'

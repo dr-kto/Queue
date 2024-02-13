@@ -1,10 +1,10 @@
 'use client'
 
 import axios from 'axios'
-import useChat from '@/app/hooks/useChat'
+import useChat from '@/lib/hooks/useChat'
 import MessageBox from './MessageBox'
 import { useEffect, useRef, useState } from 'react'
-import { FullMessageType } from '@/app/types'
+import { FullMessageType } from '@/lib/types'
 import { pusherClient } from '@/lib/pusher'
 import { find } from 'lodash'
 

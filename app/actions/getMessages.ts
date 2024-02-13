@@ -1,6 +1,6 @@
 // import prisma from '@/app/libs/prismadb'
 
-import { Message } from '../types'
+import { Message } from '../../lib/types'
 
 const getMessages = async (conversationId: string) => {
     // try {

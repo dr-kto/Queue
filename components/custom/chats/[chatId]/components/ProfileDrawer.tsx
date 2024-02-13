@@ -6,12 +6,12 @@ import { IoClose, IoTrash } from 'react-icons/io5'
 // import { Conversation, User } from '@prisma/client';
 import { format } from 'date-fns'
 
-import useOtherUser from '@/app/hooks/useOtherUser'
-import useActiveList from '@/app/hooks/useActiveLists'
+import useOtherUser from '@/lib/hooks/useOtherUser'
+import useActiveList from '@/lib/hooks/useActiveLists'
 
 import Avatar from '@/components/custom/Avatar'
 import AvatarGroup from '@/components/custom/AvatarGroup'
-import { Chat, User } from '@/app/types'
+import { Chat, User } from '@/lib/types'
 import ConfirmModal from './ConfirmModal'
 
 interface ProfileDrawerProps {

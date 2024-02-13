@@ -11,7 +11,7 @@ import Select from '../inputs/Select'
 import Modal from './Modal'
 import Button from '../Button'
 import { toast } from 'react-hot-toast'
-import { User } from '@/app/types'
+import { User } from '@/lib/types'
 
 interface GroupChatModalProps {
     isOpen?: boolean

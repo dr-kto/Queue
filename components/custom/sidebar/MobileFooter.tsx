@@ -1,7 +1,7 @@
 'use client'
 
-import useChat from '@/app/hooks/useChat'
-import useLinks from '@/app/hooks/useLinks'
+import useChat from '@/lib/hooks/useChat'
+import useLinks from '@/lib/hooks/useLinks'
 import MobileItem from './MobileItem'
 
 const MobileFooter = () => {

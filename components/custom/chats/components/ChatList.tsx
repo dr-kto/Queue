@@ -1,7 +1,7 @@
 'use client'
 
-import useChat from '@/app/hooks/useChat'
-import { FullChatType, User } from '@/app/types'
+import useChat from '@/lib/hooks/useChat'
+import { FullChatType, User } from '@/lib/types'
 import clsx from 'clsx'
 import { useSession } from 'next-auth/react'
 import { useEffect, useMemo, useState } from 'react'
@@ -90,12 +90,12 @@ const ChatList: React.FC<ChatListProps> = ({ initialItems, users }) => {
             <aside
                 className={clsx(
                     `
-        absolute 
+        relative 
+        h-full
         inset-y-0 
         pb-20
         lg:pb-0
-        lg:left-20 
-        lg:w-80 
+        lg:w-96 
         lg:block
         overflow-y-auto 
         border-r 

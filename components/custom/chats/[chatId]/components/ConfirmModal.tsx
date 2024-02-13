@@ -9,7 +9,7 @@ import Modal from '@/components/custom/modals/Modal'
 import Button from '@/components/custom/Button'
 // import useChat from '@/app/hooks/useChat'
 import { toast } from 'react-hot-toast'
-import useChat from '@/app/hooks/useChat'
+import useChat from '@/lib/hooks/useChat'
 
 interface ConfirmModalProps {
     isOpen?: boolean

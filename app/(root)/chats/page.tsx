@@ -1,6 +1,6 @@
 'use client'
 
-import useChat from '@/app/hooks/useChat'
+import useChat from '@/lib/hooks/useChat'
 import EmptyState from '@/components/custom/EmptyState'
 import CategoryFilter from '@/components/shared/CategoryFilter'
 import Search from '@/components/shared/Search'
@@ -41,7 +41,7 @@ const ChatsPage = async ({ searchParams }: SearchParamProps) => {
     return (
         <div
             className={clsx(
-                'lg:pl-80 h-full lg:block',
+                'w-full h-full lg:block',
                 isOpen ? 'block' : 'hidden'
             )}
         >

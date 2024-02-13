@@ -6,13 +6,13 @@ import { useMemo, useState } from 'react'
 import Link from 'next/link'
 // import { Conversation, User } from "@prisma/client";
 
-import useOtherUser from '@/app/hooks/useOtherUser'
-import useActiveList from '@/app/hooks/useActiveLists'
+import useOtherUser from '@/lib/hooks/useOtherUser'
+import useActiveList from '@/lib/hooks/useActiveLists'
 
 import Avatar from '@/components/custom/Avatar'
 import AvatarGroup from '@/components/custom/AvatarGroup'
 import ProfileDrawer from './ProfileDrawer'
-import { Chat, User } from '@/app/types'
+import { Chat, User } from '@/lib/types'
 
 interface HeaderProps {
     chat: Chat & {

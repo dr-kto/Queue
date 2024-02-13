@@ -1,6 +1,6 @@
 'use client'
 
-import useLinks from '@/app/hooks/useLinks'
+import useLinks from '@/lib/hooks/useLinks'
 import { useState } from 'react'
 import SettingsModal from './SettingsModal'
 import DesktopItem from './DesktopItem'
