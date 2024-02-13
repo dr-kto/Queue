@@ -46,7 +46,7 @@ const GroupChatModal: React.FC<GroupChatModalProps> = ({
         setIsLoading(true)
 
         axios
-            .post('/api/conversations', {
+            .post('/api/chats', {
                 ...data,
                 isGroup: true,
             })
