@@ -1,3 +1,5 @@
+'use client'
+
 import { IEvent } from '@/lib/database/models/event.model'
 import React from 'react'
 import Card from './Card'
@@ -30,12 +32,14 @@ const UserCollection = ({
                     <ul className="grid w-full grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:gap-10">
                         {data.map((user) => {
                             return (
-                                <li
-                                    key={user._id}
-                                    className="flex justify-center"
-                                >
-                                    <UserCard user={user} />
-                                </li>
+                                <>
+                                    <li
+                                        key={`${user.username}_${user._id}`}
+                                        className="flex justify-center"
+                                    >
+                                        <UserCard user={user} />
+                                    </li>
+                                </>
                             )
                         })}
                     </ul>

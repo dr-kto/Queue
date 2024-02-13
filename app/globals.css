@@ -77,6 +77,77 @@ body {
     font-family: var(--font-poppins);
 }
 
+/*
+  Based on TailwindCSS recommendations,
+  consider using classes instead of the `@apply` directive
+  @see https://tailwindcss.com/docs/reusing-styles#avoiding-premature-abstraction
+*/
+.user-card {
+    @apply h-[400px] shadow-[-10px_5px_20px_rgba(0,0,0,0.3)] overflow-hidden flex flex-col items-center justify-between transition-shadow  cursor-pointer rounded-[15px] hover:shadow-[-10px_10px_20px_rgba(0,0,0,0.4)];
+    background: white;
+}
+.user-cover {
+    @apply h-[150px] w-full relative bg-[url(https://images.pexels.com/photos/5969/wood-nature-forest-bridge.jpg?w=1260&h=750&dpr=2&auto=compress&cs=tinysrgb)] bg-center bg-cover;
+}
+.user-avatar {
+    @apply absolute w-[100px] h-[100px] bottom-[-35px] m-auto rounded-[50%] border-2 border-solid border-white inset-x-0;
+}
+.user-details {
+    @apply text-center w-4/5 mt-[35px];
+}
+.user-name {
+    @apply text-2xl font-semibold;
+}
+.user-email {
+    @apply text-sm  font-medium;
+}
+.user-text {
+    @apply text-[15px] text-[#666] mt-[5px];
+}
+.contact-user {
+    @apply h-[35px] w-4/5 text-[white] font-[bold] tracking-[0.5px] cursor-pointer mb-[15px] rounded-[5px] border-0;
+    background: #035f7d;
+}
+
+/* Skeleton */
+
+/* Static Skeleton */
+.user-card.skeleton .user-cover {
+    background: #e2e2e2;
+}
+.user-card.skeleton .user-cover .user-avatar {
+    @apply hidden;
+}
+.user-card.skeleton .user-cover::after {
+    @apply content-[""] absolute w-[100px] h-[100px] bottom-[-35px] z-10 m-auto rounded-[50%] border-2 border-solid border-white inset-x-0;
+    background: #e2e2e2;
+}
+
+/* Animated Skeleton */
+.user-card.skeleton .hide-text {
+    @apply text-transparent relative overflow-hidden before:content-[""] before:absolute before:h-full before:w-[50px] before:blur-[5px] before:left-[0%] before:top-0;
+    background: #e2e2e2;
+}
+.user-card.skeleton .hide-text::before {
+    background: linear-gradient(
+        to right,
+        #e2e2e2 25%,
+        #d5d5d5 50%,
+        #e2e2e2 100%
+    );
+    animation-name: gradient-animation;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+}
+@keyframes gradient-animation {
+    from {
+        @apply left-[0%];
+    }
+    to {
+        @apply left-full;
+    }
+}
+
 .filter-grey {
     filter: brightness(0) saturate(100%) invert(47%) sepia(0%) saturate(217%)
         hue-rotate(32deg) brightness(98%) contrast(92%);
@@ -219,6 +290,9 @@ body {
 
     .button {
         @apply rounded-full h-[54px] p-regular-16;
+    }
+    .userCardButton {
+        @apply rounded-sm h-[36px] p-regular-16;
     }
 
     .select-item {

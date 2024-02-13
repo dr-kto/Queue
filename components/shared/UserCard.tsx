@@ -1,4 +1,5 @@
-import { IEvent } from '@/lib/database/models/event.model'
+'use client'
+
 import { formatDateTime } from '@/lib/utils'
 import { auth } from '@clerk/nextjs'
 import Image from 'next/image'
@@ -6,94 +7,88 @@ import Link from 'next/link'
 import React from 'react'
 import { DeleteConfirmation } from './DeleteConfirmation'
 import { IUser } from '@/lib/database/models/user.model'
+import clsx from 'clsx'
+import { useState } from 'react'
+import getSession from '@/app/actions/getSession'
+import { Button } from '../ui/button'
 
 type UserCardProps = {
     user: IUser
 }
 
 const UserCard = ({ user }: UserCardProps) => {
-    const { sessionClaims } = auth()
-    const userId = sessionClaims?.userId as string
+    // const sessionClaims = getSession()
+    // const userId = sessionClaims?.userId as string
 
     // const isEventCreator = userId
+    const [activePlus, setActivePlus] = useState(false)
+    const [plusContent, setPlusContent] = useState('+')
+
+    const handlePlus = () => {
+        setActivePlus(!activePlus)
+        if (activePlus) {
+            setPlusContent('+')
+        } else {
+            setPlusContent('-')
+        }
+    }
 
     return (
-        <div className="group relative flex min-h-[380px] w-full max-w-[400px] flex-col overflow-hidden rounded-xl bg-white shadow-md transition-all hover:shadow-lg md:min-h-[438px]">
-            <Link
-                href={`/profile/${user._id}`}
+        <div className="user-card group relative flex min-h-[380px] w-full  flex-col overflow-hidden rounded-xl bg-white shadow-md transition-all hover:shadow-lg md:min-h-[438px]">
+            <div
+                className="user-cover"
                 style={{ backgroundImage: `url(${user.photo})` }}
-                className="flex-center flex-grow bg-gray-50 bg-cover bg-center text-grey-500"
-            />
-            {/* IS EVENT CREATOR ... */}
-
-            <div className="absolute right-2 top-2 flex flex-col gap-4 rounded-xl bg-white p-3 shadow-sm transition-all">
-                <Link href={`/chats/${user._id}`}>
-                    <Image
-                        src="/assets/icons/edit.svg"
-                        alt="edit"
-                        width={20}
-                        height={20}
-                    />
-                    follow
-                </Link>
-                {/* ТИПА Follow и Message */}
-                <Link href={`/chats/${user._id}`}>
-                    <Image
-                        src="/assets/icons/edit.svg"
-                        alt="edit"
-                        width={20}
-                        height={20}
-                    />
-                    message
-                </Link>
-
-                {/* <DeleteConfirmation eventId={user._id} /> */}
+            >
+                <img
+                    className="user-avatar"
+                    src={user.photo}
+                    alt="user profile image"
+                />
             </div>
-
-            <div className="flex min-h-[230px] flex-col gap-3 p-5 md:gap-4">
-                {/* {!hidePrice && (
-                    <div className="flex gap-2">
-                        <span className="p-semibold-14 w-min rounded-full bg-green-100 px-4 py-1 text-green-60">
-                            {event.isFree ? 'FREE' : `$${event.price}`}
-                        </span>
-                        <p className="p-semibold-14 w-min rounded-full bg-grey-500/10 px-4 py-1 text-grey-500 line-clamp-1">
-                            {event.category.name}
-                        </p>
-                    </div>
-                )} */}
-
-                <p className="p-medium-16 p-medium-18 text-grey-500">
-                    {/* {formatDateTime(event.startDateTime).dateTime} */}
-                    {user.username}
-                </p>
-
-                <Link href={`/chats/${user._id}`}>
-                    <p className="p-medium-16 md:p-medium-20 line-clamp-2 flex-1 text-black">
-                        {`${user.firstName} ${user.lastName}`}
-                    </p>
-                </Link>
-
-                <div className="flex-between w-full">
-                    <p className="p-medium-14 md:p-medium-16 text-grey-600">
-                        {user.email}
-                    </p>
-
-                    {/* {hasOrderLink && (
-                        <Link
-                            href={`/orders?eventId=${event._id}`}
-                            className="flex gap-2"
-                        >
-                            <p className="text-primary-500">Order Details</p>
-                            <Image
-                                src="/assets/icons/arrow.svg"
-                                alt="search"
-                                width={10}
-                                height={10}
-                            />
-                        </Link>
-                    )} */}
+            <div className="user-details gap-5 flex flex-col">
+                <div className="user-name ">
+                    {user.firstName} {user.lastName}
+                </div>
+                <div className="text-sm font-medium text-[#0f5fc0]">
+                    @{user.username}
+                </div>
+                <div
+                    className={clsx(
+                        `user-email text-start`,
+                        activePlus ? '' : 'hidden'
+                    )}
+                >
+                    Web Designer
+                </div>
+                <div
+                    className={clsx(
+                        `user-email text-start h-15`,
+                        activePlus ? '' : 'hidden'
+                    )}
+                >
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Lorem ipsum dolor sit amet, consectetur.{' '}
                 </div>
             </div>
+            {/* <button className="contact-user ">contact</button>
+                <button className="contact-user ">follow</button> */}
+            <div className="flex gap-5 p-6 justify-start w-full">
+                <Button asChild size="lg" className="userCardButton  sm:flex">
+                    <Link href="/#events">follow</Link>
+                </Button>
+                <Button asChild size="lg" className="userCardButton  sm:flex">
+                    <Link href="/#events">contact</Link>
+                </Button>
+            </div>
+            <button
+                className={clsx(
+                    ` text-4xl absolute right-4 bottom-2 rounded-tl-[22px] rounded-br-[22px] rounded-tr-none rounded-bl-none px-[13px] py-[14px]`,
+                    activePlus && 'active'
+                )}
+                onClick={() => handlePlus()}
+            >
+                {plusContent}
+            </button>
         </div>
     )
 }

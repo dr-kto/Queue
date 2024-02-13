@@ -3,6 +3,7 @@ import { Poppins } from 'next/font/google'
 import { ClerkProvider } from '@clerk/nextjs'
 // import { frFR, ruRU } from '@clerk/localizations'
 import './globals.css'
+import AuthContext from './context'
 
 const poppins = Poppins({
     subsets: ['latin'],
@@ -25,9 +26,11 @@ export default function RootLayout({
 }) {
     return (
         <ClerkProvider>
-            <html lang="en">
-                <body className={poppins.variable}>{children}</body>
-            </html>
+            <AuthContext>
+                <html lang="en">
+                    <body className={poppins.variable}>{children}</body>
+                </html>
+            </AuthContext>
         </ClerkProvider>
     )
 }
