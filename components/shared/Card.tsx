@@ -13,7 +13,7 @@ type CardProps = {
 }
 
 const Card = async ({ event, hasOrderLink, hidePrice }: CardProps) => {
-    console.log(event)
+    // console.log(event)
     const currentUser = await getCurrentUser()
     const userId = currentUser?.username
 

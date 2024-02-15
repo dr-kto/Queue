@@ -11,9 +11,9 @@ import {
 } from '@/types'
 import { revalidatePath } from 'next/cache'
 import { connectToDatabase } from '@/lib/database'
-import Event from '@/lib/database/models/event.model'
-import User from '@/lib/database/models/user.model'
-import Category from '@/lib/database/models/category.model'
+// import Event from '@/lib/database/models/event.model'
+// import User from '@/lib/database/models/user.model'
+// import Category from '@/lib/database/models/category.model'
 import { handleError } from '@/lib/utils'
 import getCurrentUser from './getCurrentUser'
 import { Console } from 'console'
@@ -99,7 +99,7 @@ export async function updateEvent({
     if (!userId) throw new Error('Owner not found')
 
     try {
-        console.log('uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu')
+        // console.log('uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu')
         const updatedEvent = await prisma.event.findFirst({
             where: {
                 id: eventToUpdate.id,
@@ -328,7 +328,7 @@ export async function getEventById(eventId: string) {
     try {
         const eventQuery = await prisma.event.findFirst({
             where: {
-                id: eventId,
+                id: { equals: eventId },
             },
             include: {
                 category: true,

@@ -208,6 +208,6 @@ export type RemoveUrlQueryParams = {
 }
 
 export type SearchParamProps = {
-    params: { id: string }
+    params: { eventId: string }
     searchParams: { [key: string]: string | string[] | undefined }
 }
