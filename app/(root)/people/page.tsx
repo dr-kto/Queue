@@ -6,12 +6,12 @@ import { getEventsByUser } from '@/lib/actions/get.event.actions'
 import { getAllUsers } from '@/lib/actions/get.user.actions'
 import getCurrentUser from '@/lib/actions/getCurrentUser'
 import getUsers from '@/lib/actions/getUsers'
-import { SearchParamProps } from '@/types'
+import { SearchPeopleParamProps } from '@/types'
 // import { auth } from '@clerk/nextjs'
 import Link from 'next/link'
 import React from 'react'
 
-const PeoplePage = async ({ searchParams }: SearchParamProps) => {
+const PeoplePage = async ({ searchParams }: SearchPeopleParamProps) => {
     const currentUser = await getCurrentUser()
     const userId = currentUser?.id
 

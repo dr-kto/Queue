@@ -1,15 +1,15 @@
 import Collection from '@/components/shared/Collection'
 import { Button } from '@/components/ui/button'
-import { getEventsByUser } from '@/lib/actions/get.event.actions'
+// import { getEventsByUser } from '@/lib/actions/get.event.actions'
 import getCurrentUser from '@/lib/actions/getCurrentUser'
-import { getOrdersByUser } from '@/lib/actions/order.actions'
-import { IOrder } from '@/lib/database/models/order.model'
-import { SearchParamProps } from '@/types'
+// import { getOrdersByUser } from '@/lib/actions/order.actions'
+// import { IOrder } from '@/lib/database/models/order.model'
+import { SearchProfileParamProps } from '@/types'
 // import { auth } from '@clerk/nextjs'
 import Link from 'next/link'
 import React from 'react'
 
-const ProfilePage = async ({ searchParams }: SearchParamProps) => {
+const ProfilePage = async ({ searchParams }: SearchProfileParamProps) => {
     const currentUser = await getCurrentUser()
     const userId = currentUser?.id
 

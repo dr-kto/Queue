@@ -208,6 +208,22 @@ export type RemoveUrlQueryParams = {
 }
 
 export type SearchParamProps = {
+    params: { id: string }
+    searchParams: { [key: string]: string | string[] | undefined }
+}
+export type SearchEventParamProps = {
     params: { eventId: string }
+    searchParams: { [key: string]: string | string[] | undefined }
+}
+export type SearchPostParamProps = {
+    params: { postId: string }
+    searchParams: { [key: string]: string | string[] | undefined }
+}
+export type SearchProfileParamProps = {
+    params: { profileId: string }
+    searchParams: { [key: string]: string | string[] | undefined }
+}
+export type SearchPeopleParamProps = {
+    params: { profileId: string }
     searchParams: { [key: string]: string | string[] | undefined }
 }

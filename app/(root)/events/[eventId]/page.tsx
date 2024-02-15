@@ -5,13 +5,13 @@ import {
     getRelatedEventsByCategory,
 } from '@/lib/actions/get.event.actions'
 import { formatDateTime } from '@/lib/utils'
-import { SearchParamProps } from '@/types'
+import { SearchEventParamProps } from '@/types'
 import Image from 'next/image'
 
 const EventDetails = async ({
     params: { eventId },
     searchParams,
-}: SearchParamProps) => {
+}: SearchEventParamProps) => {
     const event = await getEventById(eventId)
     // console.log({ event })
 

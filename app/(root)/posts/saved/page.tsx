@@ -8,6 +8,11 @@
 // import Link from 'next/link'
 // import React from 'react'
 
+const page = () => {
+    return <div>page</div>
+}
+
+export default page
 // const SavedPage = async ({ searchParams }: SearchParamProps) => {
 //     const { sessionClaims } = auth()
 //     const userId = sessionClaims?.userId as string
