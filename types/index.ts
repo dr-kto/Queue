@@ -216,7 +216,7 @@ export type SearchEventParamProps = {
     searchParams: { [key: string]: string | string[] | undefined }
 }
 export type SearchPostParamProps = {
-    params: { postId: string }
+    params: { id: string }
     searchParams: { [key: string]: string | string[] | undefined }
 }
 export type SearchProfileParamProps = {
