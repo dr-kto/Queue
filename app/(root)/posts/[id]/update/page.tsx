@@ -8,6 +8,12 @@
 //     }
 // }
 
+const page = () => {
+    return <div>page</div>
+}
+
+export default page
+
 // const UpdatePost = async ({ params: { id } }: UpdatePostProps) => {
 //     const { sessionClaims } = auth()
 
