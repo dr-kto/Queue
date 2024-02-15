@@ -15,6 +15,10 @@
 //         )
 //     }
 
+export default async function POST(req: Request) {
+    return new Response('', { status: 200 })
+}
+
 //     // Get the headers
 //     const headerPayload = headers()
 //     const svix_id = headerPayload.get('svix-id')
