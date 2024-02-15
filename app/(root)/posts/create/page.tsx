@@ -1,6 +1,14 @@
 // import EventForm from '@/components/shared/EventForm'
 // // import { auth } from '@clerk/nextjs'
 
+import React from 'react'
+
+const page = () => {
+    return <div>page</div>
+}
+
+export default page
+
 // const CreatePost = () => {
 //     const { sessionClaims } = auth()
 
