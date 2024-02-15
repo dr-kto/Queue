@@ -4,14 +4,20 @@ import { CreateCategoryParams } from '@/types'
 import { handleError } from '../utils'
 import { connectToDatabase } from '../database'
 import Category from '../database/models/category.model'
+import prisma from '../prisma'
 
 export const createCategory = async ({
     categoryName,
 }: CreateCategoryParams) => {
     try {
-        await connectToDatabase()
+        // await connectToDatabase()
+        const newCategory = await prisma.category.create({
+            data: {
+                name: categoryName,
+            },
+        })
 
-        const newCategory = await Category.create({ name: categoryName })
+        // const newCategory = await Category.create({ name: categoryName })
 
         return JSON.parse(JSON.stringify(newCategory))
     } catch (error) {
@@ -21,9 +27,11 @@ export const createCategory = async ({
 
 export const getAllCategories = async () => {
     try {
-        await connectToDatabase()
+        // await connectToDatabase()
 
-        const categories = await Category.find()
+        const categories = await prisma.category.findMany()
+
+        // const categories = await Category.find()
 
         return JSON.parse(JSON.stringify(categories))
     } catch (error) {

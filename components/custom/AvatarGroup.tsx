@@ -1,7 +1,6 @@
 'use client'
 
-import { User } from '@/lib/types'
-// import { User } from "@prisma/client";
+import { User } from '@prisma/client'
 import Image from 'next/image'
 
 interface AvatarGroupProps {

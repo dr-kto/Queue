@@ -1,24 +1,25 @@
 import Collection from '@/components/shared/Collection'
 import { Button } from '@/components/ui/button'
-import { getEventsByUser } from '@/lib/actions/event.actions'
+import { getEventsByUser } from '@/lib/actions/get.event.actions'
+import getCurrentUser from '@/lib/actions/getCurrentUser'
 import { getOrdersByUser } from '@/lib/actions/order.actions'
 import { IOrder } from '@/lib/database/models/order.model'
 import { SearchParamProps } from '@/types'
-import { auth } from '@clerk/nextjs'
+// import { auth } from '@clerk/nextjs'
 import Link from 'next/link'
 import React from 'react'
 
 const ProfilePage = async ({ searchParams }: SearchParamProps) => {
-    const { sessionClaims } = auth()
-    const userId = sessionClaims?.userId as string
+    const currentUser = await getCurrentUser()
+    const userId = currentUser?.id
 
     const ordersPage = Number(searchParams?.ordersPage) || 1
     const eventsPage = Number(searchParams?.eventsPage) || 1
 
-    const orders = await getOrdersByUser({ userId, page: ordersPage })
+    // const orders = await getOrdersByUser({ userId, page: ordersPage })
 
-    const orderedEvents = orders?.data.map((order: IOrder) => order.event) || []
-    const organizedEvents = await getEventsByUser({ userId, page: eventsPage })
+    // const orderedEvents = orders?.data.map((order: IOrder) => order.event) || []
+    // const organizedEvents = await getEventsByUser({ userId, page: eventsPage })
 
     return (
         <>
@@ -35,7 +36,7 @@ const ProfilePage = async ({ searchParams }: SearchParamProps) => {
             </section>
 
             <section className="wrapper my-8">
-                <Collection
+                {/* <Collection
                     data={orderedEvents}
                     emptyTitle="No event tickets purchased yet"
                     emptyStateSubtext="No worries - plenty of exciting events to explore!"
@@ -44,7 +45,7 @@ const ProfilePage = async ({ searchParams }: SearchParamProps) => {
                     page={ordersPage}
                     urlParamName="ordersPage"
                     totalPages={orders?.totalPages}
-                />
+                /> */}
             </section>
 
             {/* Events Organized */}
@@ -60,7 +61,7 @@ const ProfilePage = async ({ searchParams }: SearchParamProps) => {
             </section>
 
             <section className="wrapper my-8">
-                <Collection
+                {/* <Collection
                     data={organizedEvents?.data}
                     emptyTitle="No events have been created yet"
                     emptyStateSubtext="Go create some now"
@@ -69,7 +70,7 @@ const ProfilePage = async ({ searchParams }: SearchParamProps) => {
                     page={eventsPage}
                     urlParamName="eventsPage"
                     totalPages={organizedEvents?.totalPages}
-                />
+                /> */}
             </section>
         </>
     )

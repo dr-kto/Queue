@@ -1,19 +1,21 @@
 'use client'
 
 import { formatDateTime } from '@/lib/utils'
-import { auth } from '@clerk/nextjs'
+// import { auth } from '@clerk/nextjs'
 import Image from 'next/image'
 import Link from 'next/link'
-import React from 'react'
+import React, { useCallback } from 'react'
 import { DeleteConfirmation } from './DeleteConfirmation'
-import { IUser } from '@/lib/database/models/user.model'
 import clsx from 'clsx'
 import { useState } from 'react'
-import getSession from '@/app/actions/getSession'
+import getSession from '@/lib/actions/getSession'
 import { Button } from '../ui/button'
+import { User } from '@prisma/client'
+import { useRouter } from 'next/navigation'
+import axios from 'axios'
 
 type UserCardProps = {
-    user: IUser
+    user: User
 }
 
 const UserCard = ({ user }: UserCardProps) => {
@@ -33,22 +35,34 @@ const UserCard = ({ user }: UserCardProps) => {
         }
     }
 
+    const router = useRouter()
+    const [isLoading, setIsLoading] = useState(false)
+
+    const handleClick = useCallback(() => {
+        setIsLoading(true)
+
+        axios
+            .post('/api/chats', { userId: user.id })
+            .then((user) => {
+                router.push(`/chats/${user.data.id}`)
+            })
+            .finally(() => setIsLoading(false))
+    }, [user, router])
+
     return (
         <div className="user-card group relative flex min-h-[380px] w-full  flex-col overflow-hidden rounded-xl bg-white shadow-md transition-all hover:shadow-lg md:min-h-[438px]">
             <div
                 className="user-cover"
-                style={{ backgroundImage: `url(${user.photo})` }}
+                style={{ backgroundImage: `url(${user.backgroudImage})` }}
             >
                 <img
                     className="user-avatar"
-                    src={user.photo}
+                    src={user.image}
                     alt="user profile image"
                 />
             </div>
             <div className="user-details gap-5 flex flex-col">
-                <div className="user-name ">
-                    {user.firstName} {user.lastName}
-                </div>
+                <div className="user-name ">{user.name}</div>
                 <div className="text-sm font-medium text-[#0f5fc0]">
                     @{user.username}
                 </div>
@@ -76,8 +90,13 @@ const UserCard = ({ user }: UserCardProps) => {
                 <Button asChild size="lg" className="userCardButton  sm:flex">
                     <Link href="/#events">follow</Link>
                 </Button>
-                <Button asChild size="lg" className="userCardButton  sm:flex">
-                    <Link href="/#events">contact</Link>
+                <Button
+                    asChild
+                    size="lg"
+                    className="userCardButton  sm:flex"
+                    onClick={handleClick}
+                >
+                    <Link href="">contact</Link>
                 </Button>
             </div>
             <button

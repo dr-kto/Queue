@@ -1,14 +1,25 @@
+'use client'
+import { useChat } from '@/lib/hooks/use.chat.hooks'
 import clsx from 'clsx'
 import Image from 'next/image'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
-interface FooterProps {
-    isOpen?: boolean
-}
+// interface FooterProps {
+//     isOpen?: boolean
+// }
 
-const Footer: React.FC<FooterProps> = ({ isOpen }) => {
+// const Footer: React.FC<FooterProps> = ({ isOpen }) => {
+const Footer = () => {
+    const { isOpen } = useChat()
+    const pathname = usePathname()
     return (
-        <footer className={clsx(`border-t`, !isOpen ? 'block' : 'hidden')}>
+        <footer
+            className={clsx(
+                `border-t`,
+                !isOpen || pathname === '/chats' ? '' : 'hidden'
+            )}
+        >
             <div className="flex-center wrapper flex-between flex flex-col gap-4 p-5 text-center sm:flex-row">
                 <Link href="/">
                     <Image

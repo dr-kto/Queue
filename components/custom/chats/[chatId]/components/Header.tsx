@@ -12,7 +12,8 @@ import useActiveList from '@/lib/hooks/useActiveLists'
 import Avatar from '@/components/custom/Avatar'
 import AvatarGroup from '@/components/custom/AvatarGroup'
 import ProfileDrawer from './ProfileDrawer'
-import { Chat, User } from '@/lib/types'
+import { Chat } from '@/types'
+import { User } from '@prisma/client'
 
 interface HeaderProps {
     chat: Chat & {

@@ -5,7 +5,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select'
-import { ICategory } from '@/lib/database/models/category.model'
+// import { ICategory } from '@/lib/database/models/category.model'
 import { startTransition, useEffect, useState } from 'react'
 import {
     AlertDialog,
@@ -23,6 +23,7 @@ import {
     createCategory,
     getAllCategories,
 } from '@/lib/actions/category.actions'
+import { Category } from '@prisma/client'
 
 type DropdownProps = {
     value?: string
@@ -30,7 +31,7 @@ type DropdownProps = {
 }
 
 const Dropdown = ({ value, onChangeHandler }: DropdownProps) => {
-    const [categories, setCategories] = useState<ICategory[]>([])
+    const [categories, setCategories] = useState<Category[]>([])
     const [newCategory, setNewCategory] = useState('')
 
     const handleAddCategory = () => {
@@ -45,7 +46,7 @@ const Dropdown = ({ value, onChangeHandler }: DropdownProps) => {
         const getCategories = async () => {
             const categoryList = await getAllCategories()
 
-            categoryList && setCategories(categoryList as ICategory[])
+            categoryList && setCategories(categoryList as Category[])
         }
 
         getCategories()
@@ -62,8 +63,8 @@ const Dropdown = ({ value, onChangeHandler }: DropdownProps) => {
                 {categories.length > 0 &&
                     categories.map((category) => (
                         <SelectItem
-                            key={category._id}
-                            value={category._id}
+                            key={category.id}
+                            value={category.id}
                             className="select-item p-regular-14"
                         >
                             {category.name}

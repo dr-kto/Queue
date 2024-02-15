@@ -48,12 +48,12 @@ const useLinks = () => {
                 route: '/profile',
                 active: pathname === '/profile' || !!profileId,
             },
-            {
-                label: 'Logout',
-                onClick: () => signOut(),
-                route: '#',
-                icon: HiArrowLeftOnRectangle,
-            },
+            // {
+            //     label: 'Logout',
+            //     onClick: () => signOut(),
+            //     route: '#',
+            //     icon: HiArrowLeftOnRectangle,
+            // },
             // {
             //     imgURL: '/assets/icons/wallpaper.svg',
             //     label: 'Explore',

@@ -252,7 +252,9 @@ body {
     .p-medium-16 {
         @apply text-[16px] font-medium leading-[24px];
     }
-
+    p-medium-20 {
+        @apply text-[20px] font-medium leading-[24px];
+    }
     .p-regular-16 {
         @apply text-[16px] font-normal leading-[24px];
     }

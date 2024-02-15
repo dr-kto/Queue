@@ -11,8 +11,8 @@ import useActiveList from '@/lib/hooks/useActiveLists'
 
 import Avatar from '@/components/custom/Avatar'
 import AvatarGroup from '@/components/custom/AvatarGroup'
-import { Chat, User } from '@/lib/types'
 import ConfirmModal from './ConfirmModal'
+import { Chat, User } from '@prisma/client'
 
 interface ProfileDrawerProps {
     isOpen: boolean
@@ -144,25 +144,10 @@ const ProfileDrawer: React.FC<ProfileDrawerProps> = ({
                                                         <dl className="space-y-8 px-4 sm:space-y-6 sm:px-6">
                                                             {data.isGroup && (
                                                                 <div>
-                                                                    <dt
-                                                                        className="
-                                  text-sm 
-                                  font-medium 
-                                  text-gray-500 
-                                  sm:w-40 
-                                  sm:flex-shrink-0
-                                "
-                                                                    >
+                                                                    <dt className="text-sm font-medium text-gray-500 sm:w-40 sm:flex-shrink-0">
                                                                         Emails
                                                                     </dt>
-                                                                    <dd
-                                                                        className="
-                                  mt-1 
-                                  text-sm 
-                                  text-gray-900 
-                                  sm:col-span-2
-                                "
-                                                                    >
+                                                                    <pre className="mt-1 text-sm text-gray-900 sm:col-span-2">
                                                                         {data.users
                                                                             .map(
                                                                                 (
@@ -171,61 +156,31 @@ const ProfileDrawer: React.FC<ProfileDrawerProps> = ({
                                                                                     user.email
                                                                             )
                                                                             .join(
-                                                                                ', '
+                                                                                '\r\n'
                                                                             )}
-                                                                    </dd>
+                                                                    </pre>
                                                                 </div>
                                                             )}
                                                             {!data.isGroup && (
                                                                 <div>
-                                                                    <dt
-                                                                        className="
-                                  text-sm 
-                                  font-medium 
-                                  text-gray-500 
-                                  sm:w-40 
-                                  sm:flex-shrink-0
-                                "
-                                                                    >
+                                                                    <dt className="text-sm font-medium text-gray-500 sm:w-40 sm:flex-shrink-0">
                                                                         Email
                                                                     </dt>
-                                                                    <dd
-                                                                        className="
-                                  mt-1 
-                                  text-sm 
-                                  text-gray-900 
-                                  sm:col-span-2
-                                "
-                                                                    >
+                                                                    <pre className=" mt-1 text-sm text-gray-900 sm:col-span-2">
                                                                         {
                                                                             otherUser.email
                                                                         }
-                                                                    </dd>
+                                                                    </pre>
                                                                 </div>
                                                             )}
                                                             {!data.isGroup && (
                                                                 <>
                                                                     <hr />
                                                                     <div>
-                                                                        <dt
-                                                                            className="
-                                    text-sm 
-                                    font-medium 
-                                    text-gray-500 
-                                    sm:w-40 
-                                    sm:flex-shrink-0
-                                  "
-                                                                        >
+                                                                        <dt className="text-sm font-medium text-gray-500 sm:w-40 sm:flex-shrink-0">
                                                                             Joined
                                                                         </dt>
-                                                                        <dd
-                                                                            className="
-                                    mt-1 
-                                    text-sm 
-                                    text-gray-900 
-                                    sm:col-span-2
-                                  "
-                                                                        >
+                                                                        <dd className="mt-1 text-sm  text-gray-900 sm:col-span-2">
                                                                             <time
                                                                                 dateTime={
                                                                                     joinedDate

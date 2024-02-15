@@ -9,12 +9,12 @@ import { convertFileToUrl } from '@/lib/utils'
 
 type FileUploaderProps = {
     onFieldChange: (url: string) => void
-    imageUrl: string
+    image: string
     setFiles: Dispatch<SetStateAction<File[]>>
 }
 
 export function FileUploader({
-    imageUrl,
+    image,
     onFieldChange,
     setFiles,
 }: FileUploaderProps) {
@@ -37,10 +37,10 @@ export function FileUploader({
         >
             <input {...getInputProps()} className="cursor-pointer" />
 
-            {imageUrl ? (
+            {image ? (
                 <div className="flex h-full w-full flex-1 justify-center ">
                     <img
-                        src={imageUrl}
+                        src={image}
                         alt="image"
                         width={250}
                         height={250}

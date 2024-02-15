@@ -1,14 +1,14 @@
 'use client'
 
-import { IEvent } from '@/lib/database/models/event.model'
+// import { IEvent } from '@/lib/database/models/event.model'
 import React from 'react'
-import Card from './Card'
+// import Card from './Card'
 import Pagination from './Pagination'
 import UserCard from './UserCard'
-import { IUser } from '@/lib/database/models/user.model'
+import { User } from '@prisma/client'
 
 type UserCollectionProps = {
-    data: IUser[]
+    data: User[]
     emptyTitle: string
     emptyStateSubtext: string
     limit: number
@@ -34,7 +34,7 @@ const UserCollection = ({
                             return (
                                 <>
                                     <li
-                                        key={`${user.username}_${user._id}`}
+                                        key={`${user.username}_${user.id}`}
                                         className="flex justify-center"
                                     >
                                         <UserCard user={user} />

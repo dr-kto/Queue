@@ -10,7 +10,7 @@ import clsx from 'clsx'
 import Avatar from '../../Avatar'
 import useOtherUser from '@/lib/hooks/useOtherUser'
 import AvatarGroup from '../../AvatarGroup'
-import { FullChatType } from '@/lib/types'
+import { FullChatType } from '@/types'
 // import { FullConversationType } from '@/app/types'
 
 interface ChatBoxProps {

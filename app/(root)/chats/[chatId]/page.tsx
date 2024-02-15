@@ -1,5 +1,5 @@
-import getChatsById from '@/app/actions/getChatsById'
-import getMessages from '@/app/actions/getMessages'
+import getChatsById from '@/lib/actions/getChatsById'
+import getMessages from '@/lib/actions/getMessages'
 
 import Header from '@/components/custom/chats/[chatId]/components/Header'
 import Body from '@/components/custom/chats/[chatId]/components/Body'

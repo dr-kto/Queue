@@ -2,11 +2,11 @@
 // import getUsers from "../actions/getUsers";
 // import Sidebar from "../components/sidebar/Sidebar";
 // import ConversationList from "./components/ConversationList";
-import getChats from '@/app/actions/getChats'
-import getUsers from '@/app/actions/getUsers'
+import getChats from '@/lib/actions/getChats'
+import getUsers from '@/lib/actions/getUsers'
 import ChatList from '@/components/custom/chats/components/ChatList'
 import Sidebar from '@/components/custom/sidebar/Sidebar'
-import { getAllUsers } from '@/lib/actions/user.actions'
+// import { getAllUsers } from '@/lib/actions/user.actions'
 
 export default async function ConversationsLayout({
     children,

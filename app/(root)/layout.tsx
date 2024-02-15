@@ -1,21 +1,19 @@
-'use client'
 import Footer from '@/components/shared/Footer'
 import Header from '@/components/shared/Header'
-import useChat from '@/lib/hooks/useChat'
-import { usePathname } from 'next/navigation'
+import getCurrentUser from '@/lib/actions/getCurrentUser'
 
-export default function RootLayout({
+export default async function RootLayout({
     children,
 }: {
     children: React.ReactNode
 }) {
-    const { isOpen } = useChat()
-    const pathname = usePathname()
+    const currentUser = await getCurrentUser()
+
     return (
         <div className="flex h-screen flex-col">
-            <Header />
+            <Header currentUser={currentUser!} />
             <main className="flex-1  relative">{children}</main>
-            <Footer isOpen={isOpen || pathname === '/chats'} />
+            <Footer />
         </div>
     )
 }

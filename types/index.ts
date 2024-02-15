@@ -1,53 +1,110 @@
 // ====== USER PARAMS
+import { User, Event, Category } from '@prisma/client'
+import { string } from 'zod'
+
+// export type Event = {
+//     id: string
+//     title: string
+//     description: string
+//     location: string
+//     image: string
+//     createdAt: Date
+//     startDateTime: Date
+//     endDateTime: Date
+//     reservationLimit: string
+//     isNoLimit: boolean
+//     url: string
+//     userId: string
+//     categoryId: string
+// }
+
+export type Post = {
+    id: string
+    userId: string | null
+    caption: string | null
+    tags: string | null
+    image: string
+    video: string | null
+    file: string | null
+    location: string | null
+    createdAt: Date
+    owner: User
+    saves: Saves
+}
+
+export type Saves = {
+    id: string
+    userId: string | null
+    user: User | null
+    postId: string | null
+    post: Post[]
+}
+
+export type Message = {
+    id: string
+    body: string | null
+    image: string | null
+    createdAt: Date
+    seenIds: string[]
+    chatId: string
+    senderId: string
+}
+
+export type Chat = {
+    id: string
+    createdAt: Date
+    lastMessageAt: Date
+    name: string | null
+    isGroup: boolean | null
+    messagesIds: string[]
+    userIds: string[]
+}
+
+export type FullMessageType = Message & {
+    sender: User
+    seen: User[]
+}
+
+export type FullChatType = Chat & {
+    users: User[]
+    messages: FullMessageType[]
+}
+
+export type Owner = User & {}
+
+export type Events = Event & {}
+
+export type FullEventType = Events & {
+    owner: Owner
+    category: Category
+}
+// -----------------------
+
+// -----------------------
+
 export type CreateUserParams = {
-    clerkId: string
-    firstName: string
-    lastName: string
+    name: string
     username: string
     email: string
-    photo: string
+    image: string
 }
 
 export type UpdateUserParams = {
-    firstName: string
-    lastName: string
+    name: string
     username: string
-    photo: string
+    image: string
 }
 
 // ====== EVENT PARAMS
 export type CreateEventParams = {
     userId: string
-    event: {
-        title: string
-        description: string
-        location: string
-        imageUrl: string
-        startDateTime: Date
-        endDateTime: Date
-        categoryId: string
-        price: string
-        isFree: boolean
-        url: string
-    }
+    eventToCreate: Event
     path: string
 }
 
 export type UpdateEventParams = {
     userId: string
-    event: {
-        _id: string
-        title: string
-        imageUrl: string
-        description: string
-        location: string
-        startDateTime: Date
-        endDateTime: Date
-        categoryId: string
-        price: string
-        isFree: boolean
-        url: string
-    }
+    eventToUpdate: Event
     path: string
 }
 
@@ -64,14 +121,14 @@ export type GetAllEventsParams = {
 }
 export type GetAllUsersParams = {
     query: string
-    userId: string
+    userId?: string
     category: string
     limit: number
     page: number
 }
 
 export type GetEventsByUserParams = {
-    userId: string
+    userId?: string
     limit?: number
     page: number
 }
@@ -83,27 +140,27 @@ export type GetRelatedEventsByCategoryParams = {
     page: number | string
 }
 
-export type Event = {
-    _id: string
-    title: string
-    description: string
-    price: string
-    isFree: boolean
-    imageUrl: string
-    location: string
-    startDateTime: Date
-    endDateTime: Date
-    url: string
-    organizer: {
-        _id: string
-        firstName: string
-        lastName: string
-    }
-    category: {
-        _id: string
-        name: string
-    }
-}
+// export type Event = {
+//     _id: string
+//     title: string
+//     description: string
+//     price: string
+//     isFree: boolean
+//     imageUrl: string
+//     location: string
+//     startDateTime: Date
+//     endDateTime: Date
+//     url: string
+//     organizer: {
+//         _id: string
+//         firstName: string
+//         lastName: string
+//     }
+//     category: {
+//         _id: string
+//         name: string
+//     }
+// }
 
 // ====== CATEGORY PARAMS
 export type CreateCategoryParams = {

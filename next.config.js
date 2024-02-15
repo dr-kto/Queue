@@ -30,6 +30,11 @@ const nextConfig = {
             },
         ],
     },
+    headers: [
+        {
+            key: 'Access-Control-Allow-Origin',
+        },
+    ],
 }
 
 module.exports = nextConfig

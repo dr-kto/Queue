@@ -2,16 +2,18 @@ import CategoryFilter from '@/components/shared/CategoryFilter'
 import Search from '@/components/shared/Search'
 import UserCollection from '@/components/shared/UserCollection'
 import { Button } from '@/components/ui/button'
-import { getEventsByUser } from '@/lib/actions/event.actions'
-import { getAllUsers } from '@/lib/actions/user.actions'
+import { getEventsByUser } from '@/lib/actions/get.event.actions'
+import { getAllUsers } from '@/lib/actions/get.user.actions'
+import getCurrentUser from '@/lib/actions/getCurrentUser'
+import getUsers from '@/lib/actions/getUsers'
 import { SearchParamProps } from '@/types'
-import { auth } from '@clerk/nextjs'
+// import { auth } from '@clerk/nextjs'
 import Link from 'next/link'
 import React from 'react'
 
 const PeoplePage = async ({ searchParams }: SearchParamProps) => {
-    const { sessionClaims } = auth()
-    const userId = sessionClaims?.userId as string
+    const currentUser = await getCurrentUser()
+    const userId = currentUser?.id
 
     const usersPage = Number(searchParams?.usersPage) || 1
 
@@ -28,9 +30,10 @@ const PeoplePage = async ({ searchParams }: SearchParamProps) => {
         page: usersPage,
     })
     // console.log(searchParams, 'jk')
-    // console.log(users, '11111')
-
-    // console.log(organizedEvents?.data, 'dsfdfsd')
+    // console.log(usersPage, '11111')
+    // const i = await getCurrentUser()
+    const i = await getUsers()
+    // console.log(users, 'dsfdfsd', i)
 
     return (
         <>
@@ -44,11 +47,12 @@ const PeoplePage = async ({ searchParams }: SearchParamProps) => {
 
                 <div className="flex w-full flex-col gap-5 md:flex-row">
                     <Search />
+                    {/* {users?.toString()} */}
+
                     {/* <CategoryFilter /> */}
                 </div>
-
                 <UserCollection
-                    data={users?.data}
+                    data={users}
                     emptyTitle="There is no crowd"
                     emptyStateSubtext="don't worry, you'll find them!"
                     limit={3}

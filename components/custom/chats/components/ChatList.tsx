@@ -1,20 +1,19 @@
 'use client'
 
 import useChat from '@/lib/hooks/useChat'
-import { FullChatType, User } from '@/lib/types'
+import { FullChatType } from '@/types'
 import clsx from 'clsx'
 import { useSession } from 'next-auth/react'
 import { useEffect, useMemo, useState } from 'react'
 import { useRouter } from 'next/navigation'
 
-// import { User } from '@prisma/client'
+import { User } from '@prisma/client'
 import { MdOutlineGroupAdd } from 'react-icons/md'
 import { find, uniq } from 'lodash'
 
 import { pusherClient } from '@/lib/pusher'
 import GroupChatModal from '../../modals/GroupChatModal'
 import ChatBox from './ChatBox'
-// import ConversationBox from './ConversationBox'
 
 interface ChatListProps {
     initialItems: FullChatType[]
@@ -42,42 +41,40 @@ const ChatList: React.FC<ChatListProps> = ({ initialItems, users }) => {
 
         pusherClient.subscribe(pusherKey)
 
-        const updateHandler = (conversation: FullChatType) => {
+        const updateHandler = (chat: FullChatType) => {
             setItems((current) =>
-                current.map((currentConversation) => {
-                    if (currentConversation.id === conversation.id) {
+                current.map((currentChat) => {
+                    if (currentChat.id === chat.id) {
                         return {
-                            ...currentConversation,
-                            messages: conversation.messages,
+                            ...currentChat,
+                            messages: chat.messages,
                         }
                     }
 
-                    return currentConversation
+                    return currentChat
                 })
             )
         }
 
-        const newHandler = (conversation: FullChatType) => {
+        const newHandler = (chat: FullChatType) => {
             setItems((current) => {
-                if (find(current, { id: conversation.id })) {
+                if (find(current, { id: chat.id })) {
                     return current
                 }
 
-                return [conversation, ...current]
+                return [chat, ...current]
             })
         }
 
-        const removeHandler = (conversation: FullChatType) => {
+        const removeHandler = (chat: FullChatType) => {
             setItems((current) => {
-                return [
-                    ...current.filter((convo) => convo.id !== conversation.id),
-                ]
+                return [...current.filter((convo) => convo.id !== chat.id)]
             })
         }
 
-        pusherClient.bind('conversation:update', updateHandler)
-        pusherClient.bind('conversation:new', newHandler)
-        pusherClient.bind('conversation:remove', removeHandler)
+        pusherClient.bind('chat:update', updateHandler)
+        pusherClient.bind('chat:new', newHandler)
+        pusherClient.bind('chat:remove', removeHandler)
     }, [pusherKey, router])
 
     return (

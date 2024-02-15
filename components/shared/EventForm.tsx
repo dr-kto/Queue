@@ -27,13 +27,18 @@ import { useUploadThing } from '@/lib/uploadthing'
 import 'react-datepicker/dist/react-datepicker.css'
 import { Checkbox } from '../ui/checkbox'
 import { useRouter } from 'next/navigation'
-import { createEvent, updateEvent } from '@/lib/actions/event.actions'
-import { IEvent } from '@/lib/database/models/event.model'
+import { createEvent, updateEvent } from '@/lib/actions/get.event.actions'
+// import { IEvent } from '@/lib/database/models/event.model'
+
+import prisma from '@/lib/prisma'
+import { Event } from '@prisma/client'
+import axios from 'axios'
+import toast from 'react-hot-toast'
 
 type EventFormProps = {
     userId: string
     type: 'Create' | 'Update'
-    event?: IEvent
+    event?: Event
     eventId?: string
 }
 
@@ -42,9 +47,16 @@ const EventForm = ({ userId, type, event, eventId }: EventFormProps) => {
     const initialValues =
         event && type === 'Update'
             ? {
-                  ...event,
+                  title: event.title,
+                  description: event.description,
+                  location: event.location,
+                  image: event.image,
                   startDateTime: new Date(event.startDateTime),
                   endDateTime: new Date(event.endDateTime),
+                  reservationLimit: event.reservationLimit,
+                  isNoLimit: event.isNoLimit,
+                  url: event.url,
+                  categoryId: event.categoryId,
               }
             : eventDefaultValues
     const router = useRouter()
@@ -53,11 +65,21 @@ const EventForm = ({ userId, type, event, eventId }: EventFormProps) => {
 
     const form = useForm<z.infer<typeof eventFormSchema>>({
         resolver: zodResolver(eventFormSchema),
-        defaultValues: initialValues,
+        defaultValues: {
+            title: initialValues.title || '',
+            description: initialValues.description || '',
+            location: initialValues.location || '',
+            image: initialValues.image || '',
+            startDateTime: initialValues.startDateTime,
+            endDateTime: initialValues.endDateTime,
+            reservationLimit: initialValues.reservationLimit || '',
+            isNoLimit: initialValues.isNoLimit || false,
+            url: initialValues.url || '',
+            categoryId: initialValues.categoryId || '',
+        },
     })
-
     async function onSubmit(values: z.infer<typeof eventFormSchema>) {
-        let uploadedImageUrl = values.imageUrl
+        let uploadedImageUrl = values.image
 
         if (files.length > 0) {
             const uploadedImages = await startUpload(files)
@@ -71,15 +93,32 @@ const EventForm = ({ userId, type, event, eventId }: EventFormProps) => {
 
         if (type === 'Create') {
             try {
+                // const newEvent = await createEvent({userId, eventToCreate: {...values, image: uploadedImageUrl}, path: "/profile"})}
+                // axios
+                //     .post('/api/event/create', {
+                //         ...values,
+                //         userId: userId,
+                //     })
+                //     .then((newEvent) => {
+                //         form.reset()
+                //         // router.push(`/`)
+                //         console.log('smth wRONG ', newEvent.data.id)
+                //         const newEventId = newEvent.data.id
+
+                //         router.push(`/events/${newEventId}`)
+                //     })
+                //     .catch(() => toast.error('Something went wrong!'))
+
+                // console.log('new evtn', newEvent)
                 const newEvent = await createEvent({
-                    event: { ...values, imageUrl: uploadedImageUrl },
                     userId,
+                    eventToCreate: { ...values, image: uploadedImageUrl },
                     path: '/profile',
                 })
 
                 if (newEvent) {
                     form.reset()
-                    router.push(`/events/${newEvent._id}`)
+                    router.push(`/events/${newEvent.id}`)
                 }
             } catch (error) {
                 console.log(error)
@@ -93,19 +132,37 @@ const EventForm = ({ userId, type, event, eventId }: EventFormProps) => {
             }
 
             try {
+                // const updatedEvent = await prisma.event.update({
+                //     where: { id: eventId },
+                //     data: {
+                //         title: values.title,
+                //         description: values.description,
+                //         location: values.location,
+                //         image: uploadedImageUrl,
+                //         startDateTime: new Date(values.startDateTime),
+                //         endDateTime: new Date(values.endDateTime),
+                //         reservationLimit: values.reservationLimit,
+                //         isNoLimit: values.isNoLimit,
+                //         url: values.url,
+                //         category: { connect: { id: values.categoryId } },
+                //         owner: { connect: { id: userId } },
+                //     },
+                // })
+
                 const updatedEvent = await updateEvent({
                     userId,
-                    event: {
+                    eventToUpdate: {
                         ...values,
-                        imageUrl: uploadedImageUrl,
-                        _id: eventId,
+                        image: uploadedImageUrl,
+                        id: eventId,
+                        userId: userId,
                     },
                     path: `/events/${eventId}`,
                 })
 
                 if (updatedEvent) {
                     form.reset()
-                    router.push(`/events/${updatedEvent._id}`)
+                    router.push(`/events/${updatedEvent.id}`)
                 }
             } catch (error) {
                 console.log(error)
@@ -172,13 +229,13 @@ const EventForm = ({ userId, type, event, eventId }: EventFormProps) => {
                     />
                     <FormField
                         control={form.control}
-                        name="imageUrl"
+                        name="image"
                         render={({ field }) => (
                             <FormItem className="w-full">
                                 <FormControl className="h-72">
                                     <FileUploader
                                         onFieldChange={field.onChange}
-                                        imageUrl={field.value}
+                                        image={field.value}
                                         setFiles={setFiles}
                                     />
                                 </FormControl>
@@ -289,36 +346,36 @@ const EventForm = ({ userId, type, event, eventId }: EventFormProps) => {
                 <div className="flex flex-col gap-5 md:flex-row">
                     <FormField
                         control={form.control}
-                        name="price"
+                        name="reservationLimit"
                         render={({ field }) => (
                             <FormItem className="w-full">
                                 <FormControl>
                                     <div className="flex-center h-[54px] w-full overflow-hidden rounded-full bg-grey-50 px-4 py-2">
                                         <Image
-                                            src="/assets/icons/dollar.svg"
-                                            alt="dollar"
+                                            src="/assets/images/placeholderUser.jpg"
+                                            alt="limit count"
                                             width={24}
                                             height={24}
                                             className="filter-grey"
                                         />
                                         <Input
                                             type="number"
-                                            placeholder="Price"
+                                            placeholder="Visitor Limit"
                                             {...field}
                                             className="p-regular-16 border-0 bg-grey-50 outline-offset-0 focus:border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
                                         />
                                         <FormField
                                             control={form.control}
-                                            name="isFree"
+                                            name="isNoLimit"
                                             render={({ field }) => (
                                                 <FormItem>
                                                     <FormControl>
                                                         <div className="flex items-center">
                                                             <label
-                                                                htmlFor="isFree"
+                                                                htmlFor="isNoLimit"
                                                                 className="whitespace-nowrap pr-3 leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                                                             >
-                                                                Free Ticket
+                                                                Limitless
                                                             </label>
                                                             <Checkbox
                                                                 onCheckedChange={

@@ -2,9 +2,11 @@ import { IEvent } from '@/lib/database/models/event.model'
 import React from 'react'
 import Card from './Card'
 import Pagination from './Pagination'
+import { Event } from '@prisma/client'
+import { FullEventType } from '@/types'
 
 type CollectionProps = {
-    data: IEvent[]
+    data: FullEventType[]
     emptyTitle: string
     emptyStateSubtext: string
     limit: number
@@ -23,19 +25,22 @@ const Collection = ({
     collectionType,
     urlParamName,
 }: CollectionProps) => {
+    // console.log({ data })
     return (
         <>
             {data.length > 0 ? (
                 <div className="flex flex-col items-center gap-10">
                     <ul className="grid w-full grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:gap-10">
                         {data.map((event) => {
+                            // console.log(event)
+
                             const hasOrderLink =
                                 collectionType === 'Events_Organized'
                             const hidePrice = collectionType === 'My_Tickets'
 
                             return (
                                 <li
-                                    key={event._id}
+                                    key={event.id}
                                     className="flex justify-center"
                                 >
                                     <Card
