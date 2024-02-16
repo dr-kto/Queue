@@ -366,7 +366,6 @@ body {
 }
 
 /* ORDER TICKET CSS */
-
 #app {
     perspective: 1200px;
     --o: 0;
@@ -485,7 +484,7 @@ body {
 .back .logo {
     position: absolute;
     right: var(--gutter);
-    top: 15%;
+    top: 13%;
     width: 16%;
     image-rendering: optimize-speed;
     image-rendering: crisp-edges;
@@ -494,6 +493,20 @@ body {
 .data {
     margin: 14% var(--gutter);
     text-transform: uppercase;
+}
+
+.ticket h3 {
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1;
+    margin: 0.2em 0;
+}
+
+.ticket p {
+    font-size: 32px;
+    font-weight: 400;
+    line-height: 1;
+    margin: 0.2em 0 1em;
 }
 
 [contenteditable] {
@@ -564,12 +577,12 @@ body {
     font-size: 20px;
 }
 
-img {
+.ticket img {
     display: block;
     max-width: 100%;
 }
 
-h1 {
+.ticket h1 {
     font-family: 'Roboto Mono', monospace;
     position: fixed;
     top: 20px;
@@ -581,7 +594,7 @@ h1 {
     box-sizing: border-box;
 }
 
-body,
+/* body,
 html {
     display: flex;
     justify-content: center;
@@ -590,7 +603,7 @@ html {
     height: 100%;
     margin: 0;
     padding: 0;
-}
+} */
 
 #app {
     color: black;

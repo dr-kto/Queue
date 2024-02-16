@@ -23,7 +23,7 @@ const MobileNav: React.FC<MobileNavProps> = ({ isSignedIn }) => {
                     <Image
                         src="/assets/icons/menu.svg"
                         alt="menu"
-                        width={24}
+                        width={35}
                         height={24}
                         className="cursor-pointer"
                     />
