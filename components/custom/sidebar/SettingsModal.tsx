@@ -110,7 +110,6 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
                                 label="Status"
                                 id="status"
                                 errors={errors}
-                                required
                                 register={register}
                             />
                             <Input
@@ -118,7 +117,6 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
                                 label="About yourself"
                                 id="bio"
                                 errors={errors}
-                                required
                                 register={register}
                             />
                             <Input
@@ -126,7 +124,6 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
                                 label="Location"
                                 id="location"
                                 errors={errors}
-                                required
                                 register={register}
                             />
                             <Input
@@ -134,7 +131,6 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
                                 label="Password"
                                 id="password"
                                 errors={errors}
-                                required
                                 register={register}
                             />
                             {/* <Input
@@ -167,7 +163,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
                                     />
                                     <CldUploadButton
                                         options={{ maxFiles: 1 }}
-                                        onUpload={handleBGUpload}
+                                        onUpload={handleUpload}
                                         uploadPreset="ityijtur"
                                     >
                                         <Button
@@ -202,8 +198,8 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
                                     />
                                     <CldUploadButton
                                         options={{ maxFiles: 1 }}
-                                        onUpload={handleUpload}
-                                        uploadPreset="pgc9ehd5"
+                                        onUpload={handleBGUpload}
+                                        uploadPreset="ityijtur"
                                     >
                                         <Button
                                             disabled={isLoading}

@@ -17,19 +17,30 @@ export const authOptions: AuthOptions = {
         GoogleProvider({
             clientId: process.env.GOOGLE_CLIENT_ID as string,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+
+            profile(profile) {
+                return {
+                    id: profile.sub,
+                    name: `${profile.given_name} ${profile.family_name}`,
+                    email: profile.email,
+                    image: profile.picture,
+                    role: profile.role ? profile.role : 'user',
+                    username: profile.email.split('@')[0],
+                }
+            },
         }),
         CredentialsProvider({
             name: 'credentials',
             credentials: {
                 email: { label: 'email', type: 'text' },
                 password: { label: 'password', type: 'password' },
-                // username: { label: 'username', type: 'text' },
+                username: { label: 'username', type: 'text' },
             },
             async authorize(credentials) {
                 if (
                     !credentials?.email ||
-                    !credentials?.password
-                    // || !credentials?.username
+                    !credentials?.password ||
+                    !credentials?.username
                 ) {
                     throw new Error('Invalid credentials')
                 }
@@ -42,11 +53,11 @@ export const authOptions: AuthOptions = {
 
                 // console.log('lmao', user, 'lmao')
 
-                // const username = await prisma.user.findUnique({
-                //     where: {
-                //         username: credentials.username,
-                //     },
-                // })
+                const username = await prisma.user.findUnique({
+                    where: {
+                        username: credentials.username,
+                    },
+                })
 
                 if (
                     !user ||
@@ -73,6 +84,15 @@ export const authOptions: AuthOptions = {
     debug: process.env.NODE_ENV === 'development',
     session: {
         strategy: 'jwt',
+    },
+    callbacks: {
+        async jwt({ token, user }) {
+            return { ...token, ...user }
+        },
+        async session({ session, token }) {
+            session.user.role = token.role
+            return session
+        },
     },
     secret: process.env.NEXTAUTH_SECRET,
 }

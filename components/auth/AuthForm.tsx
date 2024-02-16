@@ -44,8 +44,7 @@ const AuthForm = () => {
     } = useForm<FieldValues>({
         defaultValues: {
             name: '',
-            username: '',
-            // username: `user-${cuid()}`,
+            username: `user-${cuid()}`,
             email: '',
             password: '',
         },
