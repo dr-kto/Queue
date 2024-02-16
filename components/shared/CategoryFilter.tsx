@@ -8,13 +8,14 @@ import {
     SelectValue,
 } from '@/components/ui/select'
 import { getAllCategories } from '@/lib/actions/category.actions'
-import { ICategory } from '@/lib/database/models/category.model'
+// import { ICategory } from '@/lib/database/models/category.model'
 import { formUrlQuery, removeKeysFromQuery } from '@/lib/utils'
+import { Category } from '@prisma/client'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 const CategoryFilter = () => {
-    const [categories, setCategories] = useState<ICategory[]>([])
+    const [categories, setCategories] = useState<Category[]>([])
     const router = useRouter()
     const searchParams = useSearchParams()
 
@@ -22,7 +23,7 @@ const CategoryFilter = () => {
         const getCategories = async () => {
             const categoryList = await getAllCategories()
 
-            categoryList && setCategories(categoryList as ICategory[])
+            categoryList && setCategories(categoryList as Category[])
         }
 
         getCategories()
@@ -60,7 +61,7 @@ const CategoryFilter = () => {
                 {categories.map((category) => (
                     <SelectItem
                         value={category.name}
-                        key={category._id}
+                        key={category.id}
                         className="select-item p-regular-14"
                     >
                         {category.name}
