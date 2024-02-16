@@ -20,9 +20,9 @@ const Pagination = ({ page, totalPages, urlParamName }: PaginationProps) => {
             btnType === 'next' ? Number(page) + 1 : Number(page) - 1
 
         const newUrl = formUrlQuery({
-            params: searchParams.toString(),
+            params: searchParams!.toString(),
             key: urlParamName || 'page',
-            value: pageValue.toString(),
+            value: pageValue!.toString(),
         })
 
         router.push(newUrl, { scroll: false })
