@@ -81,7 +81,7 @@ const MessageBox: React.FC<MessageBoxProps> = ({ data, isLast }) => {
             text-gray-500
             "
                     >
-                        {`Seen by ${seenList}`}
+                        {`Seen by ${seenList.split(/\s+/)[0]}`}
                     </div>
                 )}
             </div>

@@ -59,11 +59,7 @@ export const authOptions: AuthOptions = {
                     },
                 })
 
-                if (
-                    !user ||
-                    !user?.password
-                    // || !username
-                ) {
+                if (!user || !user?.password || !username) {
                     throw new Error('Invalid credentials')
                 }
 
