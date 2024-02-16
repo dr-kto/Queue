@@ -82,14 +82,14 @@ export const authOptions: AuthOptions = {
     session: {
         strategy: 'jwt',
     },
-    callbacks: {
-        async jwt({ token, user }) {
-            return { ...token, ...user }
-        },
-        async session({ session, token }) {
-            session.user.role = token.role
-            return session
-        },
-    },
+    // callbacks: {
+    //     async jwt({ token, user }) {
+    //         return { ...token, ...user }
+    //     },
+    //     async session({ session, token }) {
+    //         session.user.role = token.role
+    //         return session
+    //     },
+    // },
     secret: process.env.NEXTAUTH_SECRET,
 }
