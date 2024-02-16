@@ -147,7 +147,7 @@ export async function updateEvent({
 
 export async function deleteEvent({ eventId, path }: DeleteEventParams) {
     try {
-        const eventToDelete = await prisma.event.findFirst({
+        const eventToDelete = await prisma.event.delete({
             where: {
                 id: eventId,
             },
@@ -238,9 +238,7 @@ export async function getEventsByUser({
 
         const eventsQuery = await prisma.event.findMany({
             where: {
-                owner: {
-                    id: { equals: userId },
-                },
+                userId: userId,
             },
             skip: skipAmount,
             take: limit,
@@ -249,7 +247,6 @@ export async function getEventsByUser({
                 owner: true,
             },
         })
-        // console.log('o-----k')
 
         // const eventsQuery = Event.find(conditions)
         //     .sort({ createdAt: 'desc' })
