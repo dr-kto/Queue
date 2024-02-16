@@ -63,10 +63,10 @@
 //             buyer: order.buyerId,
 //         })
 
-//         return JSON.parse(JSON.stringify(newOrder))
-//     } catch (error) {
-//         handleError(error)
-//     }
+//     return JSON.parse(JSON.stringify(newOrder))
+// } catch (error) {
+//     handleError(error)
+// }
 // }
 
 // // GET ORDERS BY EVENT

@@ -27,6 +27,12 @@ const useLinks = () => {
             // },
             {
                 imgURL: HiArrowLeftOnRectangle,
+                label: 'People',
+                route: '/people',
+                active: pathname === '/people',
+            },
+            {
+                imgURL: HiArrowLeftOnRectangle,
                 label: 'Chats',
                 route: '/chats',
                 active: pathname === '/chats' || !!chatId,
@@ -36,15 +42,10 @@ const useLinks = () => {
             //     label: 'Create Event',
             //     route: '/events/create',
             // },
+
             {
                 imgURL: HiArrowLeftOnRectangle,
-                label: 'People',
-                route: '/people',
-                active: pathname === '/people',
-            },
-            {
-                imgURL: HiArrowLeftOnRectangle,
-                label: 'My Profile',
+                label: 'My Queue',
                 route: '/profile',
                 active: pathname === '/profile' || !!profileId,
             },

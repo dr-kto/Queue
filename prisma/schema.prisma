@@ -36,7 +36,8 @@ model User {
     messages Message[]
     post     Post[]
     saves    Saves[]
-    Events   Event[]
+    events   Event[]
+    orders   Order[]
 }
 
 // model Order
@@ -75,6 +76,16 @@ model Event {
     category         Category @relation(fields: [categoryId], references: [name])
     userId           String   @db.ObjectId
     categoryId       String
+    orders           Order[]
+}
+
+model Order {
+    id        String   @id @default(auto()) @map("_id") @db.ObjectId
+    createdAt DateTime @default(now())
+    booker    User     @relation(fields: [bookerId], references: [id])
+    bookerId  String   @db.ObjectId
+    event     Event    @relation(fields: [eventId], references: [id])
+    eventId   String   @db.ObjectId
 }
 
 model Category {

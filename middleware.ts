@@ -31,7 +31,7 @@ export const config = {
         '/chats/:path*',
         '/people/:path*',
         '/posts/:path*',
-        '/events/:path*',
+        // '/events/:path*',
         '/profile/:path*',
     ],
 }

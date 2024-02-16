@@ -50,14 +50,16 @@ const Header: React.FC<HeaderProps> = ({ currentUser }) => {
                         />
                     </Link>
 
-                    <nav
-                        className={clsx(
-                            `md:flex-between md:items-bottom hidden w-full max-w-xs`,
-                            isSignedIn ? '' : 'w-0 overflow-hidden opacity-0'
-                        )}
-                    >
-                        <NavItems />
-                    </nav>
+                    {isSignedIn && (
+                        <nav
+                            className={clsx(
+                                `md:flex-between md:items-bottom hidden w-full max-w-xs`
+                                // isSignedIn ? '' : 'w-0 overflow-hidden opacity-0'
+                            )}
+                        >
+                            <NavItems />
+                        </nav>
+                    )}
                     {/* </SignedIn> */}
                     <div className="flex  justify-end gap-3">
                         {/* <SignedIn> */}
