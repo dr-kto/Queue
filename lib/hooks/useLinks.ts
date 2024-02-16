@@ -18,13 +18,13 @@ const useLinks = () => {
                 route: '/',
                 active: pathname === '/',
             },
-            {
-                imgURL: HiArrowLeftOnRectangle,
-                label: 'Posts',
-                route: '/posts',
-                active: pathname === '/posts',
-                // active: pathname === '/posts' || !!postId,
-            },
+            // {
+            //     imgURL: HiArrowLeftOnRectangle,
+            //     label: 'Posts',
+            //     route: '/posts',
+            //     active: pathname === '/posts',
+            //     // active: pathname === '/posts' || !!postId,
+            // },
             {
                 imgURL: HiArrowLeftOnRectangle,
                 label: 'Chats',
