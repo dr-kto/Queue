@@ -10,12 +10,17 @@ import {
 import { getAllCategories } from '@/lib/actions/category.actions'
 // import { ICategory } from '@/lib/database/models/category.model'
 import { formUrlQuery, removeKeysFromQuery } from '@/lib/utils'
-import { Category } from '@prisma/client'
+// import { Category } from '@prisma/client'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
+interface eCategory extends Document {
+    id: string
+    name: string
+}
+
 const CategoryFilter = () => {
-    const [categories, setCategories] = useState<Category[]>([])
+    const [categories, setCategories] = useState<eCategory[]>([])
     const router = useRouter()
     const searchParams = useSearchParams()
 
@@ -23,7 +28,7 @@ const CategoryFilter = () => {
         const getCategories = async () => {
             const categoryList = await getAllCategories()
 
-            categoryList && setCategories(categoryList as Category[])
+            categoryList && setCategories(categoryList as eCategory[])
         }
 
         getCategories()
