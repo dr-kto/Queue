@@ -19,7 +19,11 @@ export default async function ConversationsLayout({
     return (
         <Sidebar>
             <div className="h-full flex justify-center">
-                <ChatList users={users} title="Messages" initialItems={chats} />
+                <ChatList
+                    users={users!}
+                    title="Messages"
+                    initialItems={chats}
+                />
                 {children}
             </div>
         </Sidebar>

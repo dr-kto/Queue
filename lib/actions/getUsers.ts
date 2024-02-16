@@ -30,8 +30,6 @@ const getUsers = async () => {
             },
         })
 
-        if (!users) return Promise.reject
-
         return users
     } catch (error: any) {
         return []
