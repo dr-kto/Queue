@@ -32,6 +32,13 @@ const ProfilePage = async ({ searchParams }: SearchProfileParamProps) => {
                     <Button asChild size="lg" className="button hidden sm:flex">
                         <Link href="/#events">Explore More Events</Link>
                     </Button>
+                    <Button
+                        asChild
+                        size="lg"
+                        className="button flex sm:hidden absolute right-[3%] bottom-[-20%] max-h-[50px] max-w-[50px] p-5"
+                    >
+                        <Link href="/events/create">Explore</Link>
+                    </Button>
                 </div>
             </section>
 

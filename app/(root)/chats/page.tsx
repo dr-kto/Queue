@@ -15,7 +15,7 @@ const ChatsPage = async () => {
     return (
         <div
             className={clsx(
-                'w-full h-full lg:block',
+                'w-full h-full lg:block hidden',
                 isOpen ? 'block' : 'hidden'
             )}
         >
