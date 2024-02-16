@@ -61,7 +61,7 @@ const UserCard = ({ user }: UserCardProps) => {
                     alt="user profile image"
                 />
             </div>
-            <div className="user-details gap-5 flex flex-col">
+            <div className=" overflow-auto max-h-[50%] user-details gap-5 flex flex-col">
                 <div className="user-name ">{user.name}</div>
                 <div className="text-sm font-medium text-[#0f5fc0]">
                     @{user.username}
@@ -72,7 +72,7 @@ const UserCard = ({ user }: UserCardProps) => {
                         activePlus ? '' : 'hidden'
                     )}
                 >
-                    Web Designer
+                    {user.status}
                 </div>
                 <div
                     className={clsx(
@@ -80,13 +80,12 @@ const UserCard = ({ user }: UserCardProps) => {
                         activePlus ? '' : 'hidden'
                     )}
                 >
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Lorem ipsum dolor sit amet, consectetur.{' '}
+                    {user.bio}
                 </div>
             </div>
             {/* <button className="contact-user ">contact</button>
                 <button className="contact-user ">follow</button> */}
-            <div className="flex gap-5 p-6 justify-start w-full">
+            <div className="bg-inherit flex gap-5 p-6 justify-start w-full">
                 <Button asChild size="lg" className="userCardButton  sm:flex">
                     <Link href="/#events">follow</Link>
                 </Button>

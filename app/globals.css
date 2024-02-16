@@ -94,7 +94,15 @@ body {
 }
 .user-details {
     @apply text-center w-4/5 mt-[35px];
+    -ms-overflow-style: none;
+
+    /* IE and Edge */
+    scrollbar-width: none;
 }
+.user-details::-webkit-scrollbar {
+    @apply hidden;
+}
+
 .user-name {
     @apply text-2xl font-semibold;
 }
