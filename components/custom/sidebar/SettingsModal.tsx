@@ -216,16 +216,16 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
                                 </div>
                             </div>
                             <p
-                                className="mt-5 text-sm leading-6 text-gray-600 cursor-pointer"
+                                className="mt-5 flex text-base leading-6 gap-2 text-black cursor-pointer"
                                 onClick={() => signOut()}
                             >
+                                Logout
                                 <Image
-                                    width={20}
-                                    height={20}
-                                    src="http://www.w3.org/2000/svg"
+                                    width={15}
+                                    height={15}
+                                    src="/assets/icons/logout.svg"
                                     alt="logout"
                                 />
-                                Logout
                             </p>
                         </div>
                     </div>
