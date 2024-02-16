@@ -5,7 +5,7 @@
 'use client'
 import { Button } from '../ui/button'
 import {
-    checkoutOrder,
+    createEventOrder,
     isAlreadyOrdered,
 } from '@/lib/actions/get.order.actions'
 import { Event } from '@prisma/client'
@@ -38,10 +38,10 @@ const Checkout = ({ event, userId }: { event: Event; userId: string }) => {
     const onCheckout = async () => {
         const order = {
             eventId: event.id,
-            bookerId: userId,
+            userId: userId,
         }
 
-        await checkoutOrder(order)
+        await createEventOrder(order)
     }
 
     async function l() {

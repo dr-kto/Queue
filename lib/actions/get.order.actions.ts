@@ -10,6 +10,7 @@ import {
     isAlreadyOrderedParams,
     GetOrdersByEventParams,
     GetOrdersByUserParams,
+    CreateEventOrderParams,
 } from '@/types'
 import { useMemo, useState } from 'react'
 
@@ -59,8 +60,8 @@ export const isAlreadyOrdered = async ({
     return isAvailable
 }
 
-export const checkoutOrder = async (orderParams: CreateOrderParams) => {
-    const { bookerId, eventId } = orderParams
+export const createEventOrder = async (orderParams: CreateEventOrderParams) => {
+    const { userId, eventId } = orderParams
 
     try {
         const eventToCheck = await prisma.event.findFirst({
@@ -77,7 +78,7 @@ export const checkoutOrder = async (orderParams: CreateOrderParams) => {
             const newOrder = await prisma.order.create({
                 data: {
                     createdAt: new Date(),
-                    booker: { connect: { id: bookerId } },
+                    booker: { connect: { id: userId } },
                     event: { connect: { id: eventId } },
                 },
                 include: {

@@ -182,6 +182,11 @@ export type CreateOrderParams = {
     // totalAmount: string
 }
 
+export type CreateEventOrderParams = {
+    userId: string
+    eventId: string
+    // totalAmount: string
+}
 export type isAlreadyOrderedParams = {
     userId: string
     eventId: string
