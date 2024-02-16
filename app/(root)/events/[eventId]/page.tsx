@@ -45,7 +45,7 @@ const EventDetails = async ({
                                 <div className="flex gap-3">
                                     <p className="p-bold-20 rounded-full bg-green-500/10 px-5 py-2 text-green-700">
                                         {event.isNoLimit
-                                            ? 'NO LIMIT'
+                                            ? 'No limit'
                                             : `${event.reservationLimit}`}
                                     </p>
                                     <p className="p-medium-16 rounded-full bg-grey-500/10 px-4 py-2.5 text-grey-500">

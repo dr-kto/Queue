@@ -7,13 +7,15 @@ import React from 'react'
 import { Button } from '../ui/button'
 import Checkout from './Checkout'
 import { Event } from '@prisma/client'
+import { FullEventType } from '@/types'
+
 import getCurrentUser from '@/lib/actions/getCurrentUser'
 import { useSession } from 'next-auth/react'
 import SignedIn from '../auth/SignedIn'
 import SignedOut from '../auth/SignedOut'
 
 interface CheckoutButtonProps {
-    event: Event
+    event: FullEventType
     userId: string
 }
 

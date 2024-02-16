@@ -1,13 +1,17 @@
+// 'use client'
 import Collection from '@/components/shared/Collection'
 import { Button } from '@/components/ui/button'
 import { getEventsByUser } from '@/lib/actions/get.event.actions'
+import { getOrdersByUser } from '@/lib/actions/get.order.actions'
 import getCurrentUser from '@/lib/actions/getCurrentUser'
 // import { getOrdersByUser } from '@/lib/actions/order.actions'
 // import { IOrder } from '@/lib/database/models/order.model'
 import { SearchProfileParamProps } from '@/types'
+import { Order } from '@prisma/client'
 // import { auth } from '@clerk/nextjs'
 import Link from 'next/link'
 import React from 'react'
+import { FullOrderType } from '@/types'
 
 const ProfilePage = async ({ searchParams }: SearchProfileParamProps) => {
     const currentUser = await getCurrentUser()
@@ -16,9 +20,13 @@ const ProfilePage = async ({ searchParams }: SearchProfileParamProps) => {
     const ordersPage = Number(searchParams?.ordersPage) || 1
     const eventsPage = Number(searchParams?.eventsPage) || 1
 
-    // const orders = await getOrdersByUser({ userId, page: ordersPage })
+    const orders = await getOrdersByUser({ userId, page: ordersPage })
 
-    // const orderedEvents = orders?.data.map((order: IOrder) => order.event) || []
+    console.log(orders, 'pip')
+
+    const orderedEvents =
+        orders?.map((order: FullOrderType) => order.event) || []
+    console.log(orderedEvents, 'pir')
     const organizedEvents = await getEventsByUser({ userId, page: eventsPage })
 
     return (
@@ -43,7 +51,7 @@ const ProfilePage = async ({ searchParams }: SearchProfileParamProps) => {
             </section>
 
             <section className="wrapper my-8">
-                {/* <Collection
+                <Collection
                     data={orderedEvents}
                     emptyTitle="No event tickets purchased yet"
                     emptyStateSubtext="No worries - plenty of exciting events to explore!"
@@ -52,7 +60,7 @@ const ProfilePage = async ({ searchParams }: SearchProfileParamProps) => {
                     page={ordersPage}
                     urlParamName="ordersPage"
                     totalPages={orders?.totalPages}
-                /> */}
+                />
             </section>
 
             {/* Events Organized */}

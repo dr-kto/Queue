@@ -6,10 +6,21 @@ import { Input } from '../ui/input'
 import { formUrlQuery, removeKeysFromQuery } from '@/lib/utils'
 import { useRouter, useSearchParams } from 'next/navigation'
 
-const Search = ({
+interface SearchParams {
+    placeholder?: string
+    urlParamName?: string
+}
+
+type Props = {
+    placeholder?: string
+}
+
+const Search: React.FC<SearchParams> = ({
     placeholder = 'Search title...',
+    urlParamName = 'query',
 }: {
     placeholder?: string
+    urlParamName?: string
 }) => {
     const [query, setQuery] = useState('')
     const router = useRouter()
@@ -22,13 +33,13 @@ const Search = ({
             if (query) {
                 newUrl = formUrlQuery({
                     params: searchParams!.toString(),
-                    key: 'query',
+                    key: urlParamName,
                     value: query,
                 })
             } else {
                 newUrl = removeKeysFromQuery({
                     params: searchParams!.toString(),
-                    keysToRemove: ['query'],
+                    keysToRemove: [urlParamName],
                 })
             }
 

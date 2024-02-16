@@ -1,5 +1,5 @@
 // ====== USER PARAMS
-import { User, Event, Category } from '@prisma/client'
+import { User, Event, Category, Order } from '@prisma/client'
 import { string } from 'zod'
 
 // export type Event = {
@@ -77,7 +77,37 @@ export type Events = Event & {}
 export type FullEventType = Events & {
     owner: Owner
     category: Category
+    orders: Order[]
 }
+
+export type FullOrderType = Order & {
+    booker: User
+    event: Event
+    createdAt: Date
+}
+export type TicketOrderType = Order & {
+    booker: {
+        id: string
+        name: string
+        username: string
+        email: string
+        image: string
+    }
+    event: {
+        id: string
+        title: string
+    }
+    createdAt: ''
+}
+export type OrderItem = {
+    id: string
+    totalAmount: string
+    createdAt: Date
+    eventTitle: string
+    eventId: string
+    booker: string
+}
+
 // -----------------------
 
 // -----------------------
@@ -184,7 +214,7 @@ export type CreateOrderParams = {
 
 export type CreateEventOrderParams = {
     userId: string
-    eventId: string
+    event: FullEventType
     // totalAmount: string
 }
 export type isAlreadyOrderedParams = {
@@ -198,7 +228,7 @@ export type GetOrdersByEventParams = {
 }
 
 export type GetOrdersByUserParams = {
-    userId: string | null
+    userId?: string
     limit?: number
     page: string | number | null
 }

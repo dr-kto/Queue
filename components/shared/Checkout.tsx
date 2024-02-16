@@ -4,17 +4,23 @@
 // import { IEvent } from '@/lib/database/models/event.model'
 'use client'
 import { Button } from '../ui/button'
-import {
-    createEventOrder,
-    isAlreadyOrdered,
-} from '@/lib/actions/get.order.actions'
+import { isAlreadyOrdered } from '@/lib/actions/get.order.actions'
 import { Event } from '@prisma/client'
 import Link from 'next/link'
 import { useMemo, useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { FullEventType } from '@/types'
+import axios from 'axios'
 
 // loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
 
-const Checkout = ({ event, userId }: { event: Event; userId: string }) => {
+const Checkout = ({
+    event,
+    userId,
+}: {
+    event: FullEventType
+    userId: string
+}) => {
     // useEffect(() => {
     //     // Check to see if this is a redirect back from Checkout
     //     const query = new URLSearchParams(window.location.search)
@@ -35,21 +41,33 @@ const Checkout = ({ event, userId }: { event: Event; userId: string }) => {
 
     const [alreadyOrdered, setAlreadyOrdered] = useState(false)
 
-    const onCheckout = async () => {
+    const router = useRouter()
+
+    async function onSubmit() {
         const order = {
             eventId: event.id,
             userId: userId,
+            createdAt: new Date(),
         }
-
-        await createEventOrder(order)
+        if (Number(event?.reservationLimit) >= event?.orders.length) {
+            axios.post('/api/event/order', order).then(() => {
+                router.push(`/profile`)
+                // router.push(`/event/${event.id}?success=true`)
+            })
+        }
+        // const newOrder = await createEventOrder(order).then((callback) => {
+        //     console.log(callback, 'yooooooooooooo')
+        //     // router.push('/')
+        // })
     }
 
     async function l() {
-        setAlreadyOrdered(await isAlreadyOrdered({ eventId: event.id, userId }))
+        const i = await isAlreadyOrdered({ eventId: event.id, userId })
+        setAlreadyOrdered(i!)
     }
 
     return (
-        <form action={onCheckout} method="post">
+        <form action={onSubmit} method="post">
             {alreadyOrdered ? (
                 <Button
                     type="submit"

@@ -1,3 +1,4 @@
+'use server'
 import prisma from '../prisma'
 import { ObjectId } from 'mongodb'
 import { redirect } from 'next/navigation'
@@ -12,13 +13,14 @@ import {
     GetOrdersByUserParams,
     CreateEventOrderParams,
 } from '@/types'
-import { useMemo, useState } from 'react'
+// import { useMemo, useState } from 'react'
+import { revalidatePath } from 'next/cache'
 
 export const isAlreadyOrdered = async ({
     eventId,
     userId,
 }: isAlreadyOrderedParams) => {
-    const [isAvailable, setIsAvailable] = useState(false)
+    // const [isAvailable, setIsAvailable] = useState(false)
 
     try {
         const eventToCheck = await prisma.event.findFirst({
@@ -49,49 +51,102 @@ export const isAlreadyOrdered = async ({
                 Number(eventToCheck?.orders.length) ||
             userToCheck
         ) {
-            setIsAvailable(true)
+            return true
             // return JSON.parse(JSON.stringify(newOrder))
         } else {
-            setIsAvailable(false)
+            return false
         }
     } catch (error) {
         handleError(error)
     }
-    return isAvailable
 }
 
-export const createEventOrder = async (orderParams: CreateEventOrderParams) => {
-    const { userId, eventId } = orderParams
-
+export async function getOrdersByEvent({
+    searchString,
+    eventId,
+}: GetOrdersByEventParams) {
     try {
-        const eventToCheck = await prisma.event.findFirst({
+        if (!eventId) throw new Error('Event ID required')
+
+        // const order = await prisma.order.findMany({
+        //     where: {
+        //         bookerId: userId,
+        //     },
+        //     include: {
+        //         booker: true,
+        //         event: {
+        //             include: {
+        //                 owner: true,
+        //             },
+        //         },
+        //     },
+        // })
+        const order = await prisma.order.findMany({
             where: {
-                id: eventId,
+                eventId: eventId,
+                AND: [
+                    {
+                        // eventId: eventId,
+                        booker: {
+                            OR: [
+                                {
+                                    email: {
+                                        contains: searchString,
+                                        // mode: 'insensitive',
+                                    },
+                                },
+                            ],
+                            name: {
+                                contains: searchString,
+                                mode: 'insensitive',
+                            },
+                        },
+                    },
+                ],
             },
             include: {
-                owner: true,
-                orders: true,
+                booker: true,
+                event: {
+                    include: {
+                        owner: true,
+                    },
+                },
             },
         })
+        // console.log(order[0])
+        return JSON.parse(JSON.stringify(order))
+    } catch (error) {
+        handleError(error)
+    }
+}
+export async function getOrdersByUser({
+    userId,
+    limit = 3,
+    page,
+}: GetOrdersByUserParams) {
+    try {
+        const skipAmount = (Number(page) - 1) * limit
 
-        if (eventToCheck?.reservationLimit !== eventToCheck?.orders.length) {
-            const newOrder = await prisma.order.create({
-                data: {
-                    createdAt: new Date(),
-                    booker: { connect: { id: userId } },
-                    event: { connect: { id: eventId } },
+        const order = await prisma.order.findMany({
+            where: {
+                bookerId: userId,
+            },
+            skip: skipAmount,
+            take: limit,
+            include: {
+                booker: true,
+                event: {
+                    include: {
+                        owner: true,
+                    },
                 },
-                include: {
-                    booker: true,
-                    event: true,
-                },
-            })
-            return JSON.parse(JSON.stringify(newOrder))
-        } else {
-            return
-        }
-
-        // reservationLimit: orderParams.reservationLimit,
+            },
+        })
+        // revalidatePath(path)
+        console.log('not failed', order)
+        return JSON.parse(JSON.stringify(order))
+        // redirect(`${process.env.NEXT_PUBLIC_SERVER_URL}/profile`)
+        // redirect(`${process.env.NEXT_PUBLIC_SERVER_URL}/order/${newOrder.id}`)
     } catch (error) {
         handleError(error)
     }

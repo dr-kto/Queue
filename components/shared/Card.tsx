@@ -5,6 +5,7 @@ import React from 'react'
 import { DeleteConfirmation } from './DeleteConfirmation'
 import getCurrentUser from '@/lib/actions/getCurrentUser'
 import { Event } from '@prisma/client'
+import clsx from 'clsx'
 
 type CardProps = {
     event: Event
@@ -46,12 +47,19 @@ const Card = async ({ event, hasOrderLink, hidePrice }: CardProps) => {
             <div className="flex min-h-[230px] flex-col gap-3 p-5 md:gap-4">
                 {!hidePrice && (
                     <div className="flex gap-2">
-                        <span className="p-semibold-14 w-min rounded-full bg-green-100 px-4 py-1 text-green-60">
+                        <span className="p-semibold-14 rounded-full bg-green-100 px-4 py-1 text-green-60">
                             {event.isNoLimit
                                 ? 'No limit'
                                 : `${event.reservationLimit}`}
                         </span>
-                        <p className="p-semibold-14 w-min rounded-full bg-grey-500/10 px-4 py-1 text-grey-500 line-clamp-1">
+                        <p
+                            className={clsx(
+                                `p-semibold-14  rounded-full bg-grey-500/10 px-4 py-1 text-grey-500 `,
+                                // @ts-ignore
+                                event.category.name.length > 20 &&
+                                    'w-min line-clamp-1'
+                            )}
+                        >
                             {/* 
                             // @ts-ignore */}
                             {event.category.name}
@@ -82,6 +90,20 @@ const Card = async ({ event, hasOrderLink, hidePrice }: CardProps) => {
                             className="flex gap-2"
                         >
                             <p className="text-primary-500">Order Details</p>
+                            <Image
+                                src="/assets/icons/arrow.svg"
+                                alt="search"
+                                width={10}
+                                height={10}
+                            />
+                        </Link>
+                    )}
+                    {hidePrice && (
+                        <Link
+                            href={`/orders/my-order?eventId=${event.id}`}
+                            className="flex gap-2"
+                        >
+                            <p className="text-primary-500">View Details</p>
                             <Image
                                 src="/assets/icons/arrow.svg"
                                 alt="search"

@@ -330,6 +330,7 @@ export async function getEventById(eventId: string) {
             include: {
                 category: true,
                 owner: true,
+                orders: true,
             },
         })
         if (!eventQuery) throw new Error('Event not found')
