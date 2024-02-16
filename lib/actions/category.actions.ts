@@ -2,7 +2,7 @@
 
 import { CreateCategoryParams } from '@/types'
 import { handleError } from '../utils'
-import { connectToDatabase } from '../database'
+// import { connectToDatabase } from '../database'
 // import Category from '../database/models/category.model'
 import prisma from '../prisma'
 
