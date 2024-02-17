@@ -206,21 +206,21 @@ const MyOrder = ({ searchParams }: SearchParamProps) => {
     }, [name])
 
     handlePrint = async () => {
-        // const html2pdf = (await import('html2pdf.js/dist/html2pdf.min.js'))
-        //     .default
+        const html2pdf = (await import('html2pdf.js/dist/html2pdf.min.js'))
+            .default
         // console.log(content, 'haha')
 
-        // const options = {
-        //     margin: 1,
-        //     filename: `${id}.pdf`,
-        //     image: { type: 'jpeg', quality: 0.98 },
-        //     html2canvas: { scale: 2, dpi: 1200, letterRendering: true },
-        //     jsPDF: { unit: 'mm', format: 'a4' },
-        // }
+        const options = {
+            margin: 1,
+            filename: `${id}.pdf`,
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2, dpi: 1200, letterRendering: true },
+            jsPDF: { unit: 'mm', format: 'a4' },
+        }
 
         // let w = document.getElementById("frame").contentWindow
         // await content.getElementById("").print()
-        await window.print()
+        // await window.print()
         // const win = await window.open()
         // self.focus()
         // win!.document.open()
@@ -232,7 +232,7 @@ const MyOrder = ({ searchParams }: SearchParamProps) => {
         // win!.document.close()
         // win!.print()
         // win!.close()
-        // await html2pdf().set(options).from(content).save()
+        await html2pdf().set(options).from(content).save()
     }
 
     console.log(content, 'rip')
@@ -275,7 +275,7 @@ const MyOrder = ({ searchParams }: SearchParamProps) => {
                     <section className="back">
                         <div className="holo"></div>
                         <img
-                            className="logo cursor-pointer relative z-3"
+                            className="logo cursor-pointer z-3"
                             onClick={() => handlePrint()}
                             src="/assets/images/Q-logo.svg"
                             alt="Queue Logo"
