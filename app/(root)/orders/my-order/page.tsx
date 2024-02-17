@@ -281,17 +281,15 @@ const MyOrder = ({ searchParams }: SearchParamProps) => {
                             alt="Queue Logo"
                         />
                         <div className="data">
-                            <p className="max-h-[80%] sm:text-[12px]">
-                                {title}
-                            </p>
-                            <h3 className="sm:text-[10]">Date</h3>
+                            <p className="max-w-[80%]">{title}</p>
+                            <h3>Date</h3>
                             {/* contenteditable spellcheck=false */}
-                            <p className="sm:text-[12px]">{createdAt}</p>
-                            <h3 className="sm:text-[10]">Time</h3>
-                            <p className="sm:text-[12px]">07:30 pm</p>
-                            <h3 className="sm:text-[10]">Fullname</h3>
-                            <p className="sm:text-[12px]">{name}</p>
-                            <a className="qr  sm:max-w-[60px]" href="#">
+                            <p>{createdAt}</p>
+                            <h3>Time</h3>
+                            <p>07:30 pm</p>
+                            <h3>Fullname</h3>
+                            <p>{name}</p>
+                            <a className="qr" href="#">
                                 <img
                                     src="https://assets.codepen.io/13471/simeyqr.svg"
                                     alt="A code to use for accessing the simeydotme codepen profile"
@@ -302,9 +300,7 @@ const MyOrder = ({ searchParams }: SearchParamProps) => {
                         <aside className="divider">
                             <div className="username">
                                 <img className="profile" src={image} />
-                                <span className="sm:text-[7px]">
-                                    @{username}
-                                </span>{' '}
+                                <span className="">@{username}</span>{' '}
                                 <img
                                     className="verified"
                                     src="https://assets.codepen.io/13471/verified.png"

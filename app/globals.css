@@ -632,11 +632,17 @@ html {
         --scale: 0.75;
     }
 } */
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 500px) {
     .ticket h3 {
         font-size: 14px;
     }
     .ticket p {
         font-size: 16px;
+    }
+    .usernum {
+        font-size: 14px;
+    }
+    .divider {
+        font-size: 12px;
     }
 }
