@@ -275,7 +275,7 @@ const MyOrder = ({ searchParams }: SearchParamProps) => {
                     <section className="back">
                         <div className="holo"></div>
                         <img
-                            className="logo cursor-pointer"
+                            className="logo cursor-pointer relative z-3"
                             onClick={() => handlePrint()}
                             src="/assets/images/Q-logo.svg"
                             alt="Queue Logo"
