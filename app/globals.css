@@ -5,8 +5,8 @@
 @layer base {
     :root {
         --bg: #111316;
-        --logo: url(https://assets.codepen.io/13471/threads.svg);
-        --logopng: url(https://assets.codepen.io/13471/threads.png);
+        --logo: url(/assets/images/Q-logo.svg);
+        --logopng: url(/assets/images/placeholder.png);
         --ticket: url(https://assets.codepen.io/13471/ticket-shape.svg);
         --ar: 20/30;
         --gutter: 8%;
@@ -462,7 +462,7 @@ body {
     background-position: calc(var(--h)) calc(var(--h));
     background-repeat: no-repeat;
     mask-image: var(--logopng);
-    mask-size: 4% 4%;
+    mask-size: 6% 4%;
     mask-repeat: repeat;
     mix-blend-mode: plus-lighter;
     filter: brightness(0.9) contrast(0.7) saturate(2);
@@ -503,7 +503,7 @@ body {
 }
 
 .ticket p {
-    font-size: 32px;
+    font-size: 25px;
     font-weight: 400;
     line-height: 1;
     margin: 0.2em 0 1em;

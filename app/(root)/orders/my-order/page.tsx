@@ -155,7 +155,7 @@ const MyOrder = ({ searchParams }: SearchParamProps) => {
                             alt="Queue Logo"
                         />
                         <div className="data">
-                            <p>{title}</p>
+                            <p className="max-h-[80%]">{title}</p>
                             <h3>Date</h3>
                             {/* contenteditable spellcheck=false */}
                             <p>{createdAt}</p>
@@ -174,7 +174,7 @@ const MyOrder = ({ searchParams }: SearchParamProps) => {
                         <aside className="divider">
                             <div className="username">
                                 <img className="profile" src={image} />
-                                <span>{username}</span>{' '}
+                                <span>@{username}</span>{' '}
                                 <img
                                     className="verified"
                                     src="https://assets.codepen.io/13471/verified.png"
