@@ -100,7 +100,7 @@ const Card = async ({ event, hasOrderLink, hidePrice }: CardProps) => {
                     )}
                     {hidePrice && (
                         <Link
-                            href={`/orders/my-order?eventId=${event.id}`}
+                            href={`/orders/my-order?eventId=${event.id}&userId=${userId}`}
                             className="flex gap-2"
                         >
                             <p className="text-primary-500">View Details</p>

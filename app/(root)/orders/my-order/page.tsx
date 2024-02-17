@@ -2,7 +2,10 @@
 
 import Search from '@/components/shared/Search'
 import { getEventsByUser } from '@/lib/actions/get.event.actions'
-import { getOrdersByEvent } from '@/lib/actions/get.order.actions'
+import {
+    getCurrentOrderByEventAndUser,
+    getOrdersByEvent,
+} from '@/lib/actions/get.order.actions'
 import { formatDateTime, formatPrice } from '@/lib/utils'
 import { SearchParamProps, TicketOrderType } from '@/types'
 // import { IOrderItem } from '@/lib/database/models/order.model'
@@ -95,47 +98,54 @@ const MyOrder = ({ searchParams }: SearchParamProps) => {
     const refContent = useRef(null)
 
     const eventId = (searchParams?.eventId as string) || ''
-    const searchText = (searchParams?.query as string) || ''
+    const userId = (searchParams?.userId as string) || ''
 
     const [createdAt, setCreatedAt] = useState('')
+    const [startTime, setStartTime] = useState('')
+    const [endTime, setEndTime] = useState('')
     const [name, setName] = useState('')
     const [username, setUsername] = useState('')
     const [image, setImage] = useState('')
     const [title, setTitle] = useState('')
     const [email, setEmail] = useState('')
     const [id, setId] = useState('')
+    const [url, setUrl] = useState('')
     const [content, setContent] = useState('')
 
     async function l() {
         try {
-            const order = await getOrdersByEvent({
+            const order = await getCurrentOrderByEventAndUser({
                 eventId: eventId,
-                searchString: searchText,
+                userId: userId,
             })
-            setCreatedAt(order[0].createdAt)
-            setName(order[0].booker.name)
-            setUsername(order[0].booker.username)
-            setImage(order[0].booker.image)
-            setTitle(order[0].event.title)
-            setEmail(order[0].booker.email)
-            setId(order[0].id)
+            setCreatedAt(order.createdAt)
+            setStartTime(order.event.startDateTime)
+            setEndTime(order.event.endDateTime)
+            setUrl(order.event.url)
+            setName(order.booker.name)
+            if (order.booker.name.length > 25) {
+                setName(order.booker.name.slice(0, 25) + '...')
+            }
+            setUsername(order.booker.username)
+            if (order.booker.username.length > 10) {
+                setUsername(order.booker.username.slice(0, 10) + '...')
+            }
+            setImage(order.booker.image)
 
-            useMemo(() => {
-                console.log(order[0].createdAt)
-                setCreatedAt(order[0].createdAt)
-            }, [createdAt])
+            setTitle(order.event.title)
+            if (order.event.title.length > 40) {
+                setTitle(order.event.title.slice(0, 40) + '...')
+            }
 
-            useMemo(() => setName(order[0].booker.name), [name])
-
-            useMemo(() => setUsername(order[0].booker.username), [username])
-
-            useMemo(() => setImage(order[0].booker.image), [image])
-
-            useMemo(() => setTitle(order[0].booker.title), [title])
-
-            useMemo(() => setEmail(order[0].booker.email), [email])
-
-            useMemo(() => setId(order[0].id), [id])
+            setEmail(order.booker.email)
+            if (order.booker.email.length > 15) {
+                setEmail(order.booker.email.slice(0, 15) + '...')
+            }
+            console.log(order)
+            setId(order.id)
+            if (order.id.length > 10) {
+                setId(order.id.slice(0, 10) + '...')
+            }
         } catch (err) {
             console.log(err)
         }
@@ -202,13 +212,14 @@ const MyOrder = ({ searchParams }: SearchParamProps) => {
 
     // const p = reactElementToJSXString(contentToPrint())
     // console.log(contentToPrint())
-    const p = jsxToString(contentToPrint()).replaceAll('className', 'class')
+    // const p = jsxToString(contentToPrint()).replaceAll('className', 'class')
 
-    console.log(p, 'i[po')
+    // console.log(p, 'i[po')
     // setContent(p)
     useMemo(() => {
+        // setContent(p)
         setContent(refContent.current!)
-        console.log(refContent, 'yoyo')
+        // console.log(refContent, 'yoyo')
     }, [name])
 
     handlePrint = async () => {
@@ -220,7 +231,13 @@ const MyOrder = ({ searchParams }: SearchParamProps) => {
             margin: 1,
             filename: `${id}.pdf`,
             image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { scale: 2, dpi: 1200 },
+            html2canvas: {
+                scale: 2,
+                dpi: 1200,
+                useCORS: true,
+                logging: true,
+                letterRendering: true,
+            },
             jsPDF: { unit: 'mm', format: 'a4' },
         }
 
@@ -230,9 +247,9 @@ const MyOrder = ({ searchParams }: SearchParamProps) => {
 
         //     const f = document.getElementById("app").print()
         // }
-        // await window.print()
+        await window.print()
         // const win = await window.open()
-        // self.focus()
+        self.focus()
         // win!.document.open()
         // win!.document.write('<' + 'html' + '><' + 'body' + '>')
         // win!.document.write(content)
@@ -242,10 +259,11 @@ const MyOrder = ({ searchParams }: SearchParamProps) => {
         // win!.document.close()
         // win!.print()
         // win!.close()
-        await html2pdf().set(options).from(content).save()
+
+        // await html2pdf().set(options).from(content).save()
     }
 
-    console.log(content, 'rip')
+    // console.log(content, 'rip')
 
     //generate PDF
     // const handlePrint = async () => {
@@ -294,12 +312,24 @@ const MyOrder = ({ searchParams }: SearchParamProps) => {
                                 <p className="max-w-[80%]">{title}</p>
                                 <h3>Date</h3>
                                 {/* contenteditable spellcheck=false */}
-                                <p>{createdAt}</p>
+                                <p>
+                                    {
+                                        formatDateTime(new Date(createdAt))
+                                            .dateOnly
+                                    }
+                                </p>
                                 <h3>Time</h3>
-                                <p>07:30 pm</p>
+                                <p>
+                                    {
+                                        formatDateTime(new Date(startTime))
+                                            .timeOnly
+                                    }{' '}
+                                    -{' '}
+                                    {formatDateTime(new Date(endTime)).timeOnly}
+                                </p>
                                 <h3>Fullname</h3>
                                 <p>{name}</p>
-                                <a className="qr" href="#">
+                                <a className="qr" href={url}>
                                     <img
                                         src="https://assets.codepen.io/13471/simeyqr.svg"
                                         alt="A code to use for accessing the simeydotme codepen profile"
@@ -316,9 +346,7 @@ const MyOrder = ({ searchParams }: SearchParamProps) => {
                                         src="https://assets.codepen.io/13471/verified.png"
                                     />
                                 </div>
-                                <span className="usernum">
-                                    {id.substring(0, 10)}
-                                </span>
+                                <span className="usernum">{id}</span>
                             </aside>
                         </section>
                     </section>

@@ -22,11 +22,11 @@ const ProfilePage = async ({ searchParams }: SearchProfileParamProps) => {
 
     const orders = await getOrdersByUser({ userId, page: ordersPage })
 
-    console.log(orders, 'pip')
+    // console.log(orders, 'pip')
 
     const orderedEvents =
         orders?.map((order: FullOrderType) => order.event) || []
-    console.log(orderedEvents, 'pir')
+    // console.log(orderedEvents, 'pir')
     const organizedEvents = await getEventsByUser({ userId, page: eventsPage })
 
     return (

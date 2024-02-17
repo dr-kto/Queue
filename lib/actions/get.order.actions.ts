@@ -11,6 +11,7 @@ import {
     isAlreadyOrderedParams,
     GetOrdersByEventParams,
     GetOrdersByUserParams,
+    getCurrentOrderByEventAndUserParams,
     CreateEventOrderParams,
 } from '@/types'
 // import { useMemo, useState } from 'react'
@@ -115,6 +116,52 @@ export async function getOrdersByEvent({
         })
         // console.log(order[0])
         return JSON.parse(JSON.stringify(order))
+    } catch (error) {
+        handleError(error)
+    }
+}
+export async function getCurrentOrderByEventAndUser({
+    eventId,
+    userId,
+}: getCurrentOrderByEventAndUserParams) {
+    try {
+        if (!eventId) throw new Error('Event ID required')
+
+        // const order = await prisma.order.findMany({
+        //     where: {
+        //         bookerId: userId,
+        //     },
+        //     include: {
+        //         booker: true,
+        //         event: {
+        //             include: {
+        //                 owner: true,
+        //             },
+        //         },
+        //     },
+        // })
+        const newOrder = await prisma.order.findFirst({
+            where: {
+                event: {
+                    id: eventId,
+                },
+                AND: [
+                    {
+                        // eventId: eventId
+                        booker: {
+                            id: userId,
+                        },
+                    },
+                ],
+            },
+            include: {
+                booker: true,
+                event: true,
+            },
+        })
+        // console.log(eventId, 'davel', userId)
+        // console.log(newOrder, 'hiiiii')
+        return JSON.parse(JSON.stringify(newOrder))
     } catch (error) {
         handleError(error)
     }

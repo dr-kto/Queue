@@ -226,6 +226,10 @@ export type GetOrdersByEventParams = {
     eventId: string
     searchString: string
 }
+export type getCurrentOrderByEventAndUserParams = {
+    eventId: string
+    userId: string
+}
 
 export type GetOrdersByUserParams = {
     userId?: string
