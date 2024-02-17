@@ -208,7 +208,7 @@ const MyOrder = ({ searchParams }: SearchParamProps) => {
     handlePrint = async () => {
         // const html2pdf = (await import('html2pdf.js/dist/html2pdf.min.js'))
         //     .default
-        console.log(content, 'haha')
+        // console.log(content, 'haha')
 
         // const options = {
         //     margin: 1,
@@ -220,18 +220,18 @@ const MyOrder = ({ searchParams }: SearchParamProps) => {
 
         // let w = document.getElementById("frame").contentWindow
         // await content.getElementById("").print()
-        // await window.print()
-        const win = await window.open()
-        self.focus()
-        win!.document.open()
-        win!.document.write('<' + 'html' + '><' + 'body' + '>')
-        win!.document.write(content)
+        await window.print()
+        // const win = await window.open()
+        // self.focus()
+        // win!.document.open()
+        // win!.document.write('<' + 'html' + '><' + 'body' + '>')
+        // win!.document.write(content)
 
-        // win!.document.write('<style>' + '' + '</style>')
-        win!.document.write('<' + '/body' + '><' + '/html' + '>')
-        win!.document.close()
-        win!.print()
-        win!.close()
+        // // win!.document.write('<style>' + '' + '</style>')
+        // win!.document.write('<' + '/body' + '><' + '/html' + '>')
+        // win!.document.close()
+        // win!.print()
+        // win!.close()
         // await html2pdf().set(options).from(content).save()
     }
 
