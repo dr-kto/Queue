@@ -89,7 +89,7 @@ const Card = async ({ event, hasOrderLink, hidePrice }: CardProps) => {
                             href={`/orders?eventId=${event.id}`}
                             className="flex gap-2"
                         >
-                            <p className="text-primary-500">Order Details</p>
+                            <p className="text-primary-500">Orders Detail</p>
                             <Image
                                 src="/assets/icons/arrow.svg"
                                 alt="search"

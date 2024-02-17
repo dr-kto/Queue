@@ -11,6 +11,7 @@ import { useMemo, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { FullEventType } from '@/types'
 import axios from 'axios'
+import { getEventById } from '@/lib/actions/get.event.actions'
 
 // loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
 
@@ -40,6 +41,7 @@ const Checkout = ({
     // console.log(status)
 
     const [alreadyOrdered, setAlreadyOrdered] = useState(false)
+    const [isOwner, setIsOwner] = useState(false)
 
     const router = useRouter()
 
@@ -55,25 +57,28 @@ const Checkout = ({
         //     'monokana',
         //     event?.orders.length
         // )
-        if (event?.reservationLimit) {
-            if (Number(event?.reservationLimit) >= event?.orders.length) {
-                // console.log(
-                //     'bidurino',
-                //     event?.reservationLimit,
-                //     'monokara',
-                //     event?.orders.length
-                // )
+        if (!isOwner) {
+            if (event?.reservationLimit) {
+                if (Number(event?.reservationLimit) >= event?.orders.length) {
+                    // console.log(
+                    //     'bidurino',
+                    //     event?.reservationLimit,
+                    //     'monokara',
+                    //     event?.orders.length
+                    // )
+                    axios.post('/api/event/order', order).then(() => {
+                        router.push(`/profile`)
+                        // router.push(`/event/${event.id}?success=true`)
+                    })
+                }
+            } else if (event.isNoLimit) {
                 axios.post('/api/event/order', order).then(() => {
                     router.push(`/profile`)
                     // router.push(`/event/${event.id}?success=true`)
                 })
             }
-        } else if (event.isNoLimit) {
-            axios.post('/api/event/order', order).then(() => {
-                router.push(`/profile`)
-                // router.push(`/event/${event.id}?success=true`)
-            })
         }
+
         // const newOrder = await createEventOrder(order).then((callback) => {
         //     console.log(callback, 'yooooooooooooo')
         //     // router.push('/')
@@ -82,19 +87,36 @@ const Checkout = ({
 
     async function l() {
         const i = await isAlreadyOrdered({ eventId: event.id, userId })
-        setAlreadyOrdered(i!)
+        // @ts-ignore
+        setAlreadyOrdered(i)
+
+        const eventById = await getEventById(event.id)
+
+        if (eventById.owner.id === userId) {
+            setIsOwner(true)
+        }
+        // console.log(i, 'yooooooooooooo')
     }
+    l()
 
     return (
         <form action={onSubmit} method="post">
-            {alreadyOrdered ? (
+            {alreadyOrdered || isOwner ? (
                 <Button
                     type="submit"
                     role="link"
                     size="lg"
                     className="button sm:w-fit"
                 >
-                    <Link href="/profile">View Ticket</Link>
+                    <Link
+                        href={
+                            isOwner
+                                ? `/orders?eventId=${event.id}`
+                                : `/orders/my-order/?eventId=${event.id}&userId=${userId}`
+                        }
+                    >
+                        {isOwner ? `Orders Detail` : `View Ticket`}
+                    </Link>
                 </Button>
             ) : (
                 <Button
@@ -103,7 +125,7 @@ const Checkout = ({
                     size="lg"
                     className="button sm:w-fit"
                 >
-                    {event.isNoLimit ? 'Get Ticket' : 'Buy Ticket'}
+                    {event.isNoLimit ? 'Get Ticket' : 'Book Ticket'}
                 </Button>
             )}
         </form>
