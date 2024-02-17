@@ -9,6 +9,8 @@ import { SearchParamProps, TicketOrderType } from '@/types'
 import gsap from 'gsap'
 import { useEffect, useMemo, useState } from 'react'
 // import { Order } from '@prisma/client'
+import ReactDOMServer from 'react-dom/server'
+import html2pdf from 'html2pdf.js/dist/html2pdf.min.js'
 
 const MyOrder = ({ searchParams }: SearchParamProps) => {
     useEffect(() => {
@@ -131,6 +133,79 @@ const MyOrder = ({ searchParams }: SearchParamProps) => {
 
     // console.log(orders, 'rip')
 
+    // return UI
+    const content = () => {
+        return (
+            <>
+                <main id="app">
+                    <section className="ticket">
+                        <header className="front">
+                            <div className="holo"></div>
+                            <img
+                                className="logo"
+                                src="/assets/images/Q-logo.svg"
+                                alt="Queue Logo"
+                            />
+                            <aside className="divider"></aside>
+                        </header>
+
+                        <section className="back">
+                            <div className="holo"></div>
+                            <img
+                                className="logo"
+                                src="/assets/images/Q-logo.svg"
+                                alt="Queue Logo"
+                            />
+                            <div className="data">
+                                <p className="max-h-[80%]">{title}</p>
+                                <h3>Date</h3>
+                                {/* contenteditable spellcheck=false */}
+                                <p>{createdAt}</p>
+                                <h3>Time</h3>
+                                <p>07:30 pm</p>
+                                <h3>Fullname</h3>
+                                <p>{name}</p>
+                                <a className="qr" href="#">
+                                    <img
+                                        src="https://assets.codepen.io/13471/simeyqr.svg"
+                                        alt="A code to use for accessing the simeydotme codepen profile"
+                                    />
+                                </a>
+                            </div>
+
+                            <aside className="divider">
+                                <div className="username">
+                                    <img className="profile" src={image} />
+                                    <span>@{username}</span>{' '}
+                                    <img
+                                        className="verified"
+                                        src="https://assets.codepen.io/13471/verified.png"
+                                    />
+                                </div>
+                                <span className="usernum">
+                                    {id.substring(0, 10)}
+                                </span>
+                            </aside>
+                        </section>
+                    </section>
+                </main>
+            </>
+        )
+    }
+
+    //generate PDF
+    const handlePrint = () => {
+        //   const html2pdf = (await import("html2pdf.js/dist/html2pdf.min.js")).default
+        const printElement = ReactDOMServer.renderToString(content())
+        const options = {
+            margin: 1,
+            filename: `${id}.pdf `,
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: 'in', format: 'a4' },
+        }
+        html2pdf().set(options).from(printElement).save()
+    }
     return (
         <>
             {/* <h1>Threads.</h1> */}
@@ -141,6 +216,7 @@ const MyOrder = ({ searchParams }: SearchParamProps) => {
                         <div className="holo"></div>
                         <img
                             className="logo"
+                            onClick={handlePrint}
                             src="/assets/images/Q-logo.svg"
                             alt="Queue Logo"
                         />
