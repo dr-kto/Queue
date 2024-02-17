@@ -7,12 +7,18 @@ import { formatDateTime, formatPrice } from '@/lib/utils'
 import { SearchParamProps, TicketOrderType } from '@/types'
 // import { IOrderItem } from '@/lib/database/models/order.model'
 import gsap from 'gsap'
+// import { renderToHTML } from 'next/dist/server/render'
 import { useEffect, useMemo, useState } from 'react'
 // import { Order } from '@prisma/client'
-import ReactDOMServer from 'react-dom/server'
-import html2pdf from 'html2pdf.js/dist/html2pdf.min.js'
+import ReactDOMServer, { renderToString } from 'react-dom/server'
+// import html2pdf from 'html2pdf.js/dist/html2pdf.min.js'
+import jsxToString from 'jsx-to-string'
+import reactElementToJSXString from 'react-element-to-jsx-string'
 
 const MyOrder = ({ searchParams }: SearchParamProps) => {
+    // let [handlePrint, setHandlePrint] = useState()
+    let handlePrint = () => {}
+
     useEffect(() => {
         if (document) {
             /*
@@ -81,6 +87,7 @@ const MyOrder = ({ searchParams }: SearchParamProps) => {
                 duration: speed / 2,
                 ease: 'sine.out',
             })
+            // return UI
         }
     }, [])
 
@@ -94,6 +101,7 @@ const MyOrder = ({ searchParams }: SearchParamProps) => {
     const [title, setTitle] = useState('')
     const [email, setEmail] = useState('')
     const [id, setId] = useState('')
+    const [content, setContent] = useState('')
 
     async function l() {
         try {
@@ -131,92 +139,14 @@ const MyOrder = ({ searchParams }: SearchParamProps) => {
     }
     l()
 
-    // console.log(orders, 'rip')
-
-    // return UI
-    const content = () => {
+    const contentToPrint = () => {
         return (
-            <>
-                <main id="app">
-                    <section className="ticket">
-                        <header className="front">
-                            <div className="holo"></div>
-                            <img
-                                className="logo"
-                                src="/assets/images/Q-logo.svg"
-                                alt="Queue Logo"
-                            />
-                            <aside className="divider"></aside>
-                        </header>
-
-                        <section className="back">
-                            <div className="holo"></div>
-                            <img
-                                className="logo"
-                                src="/assets/images/Q-logo.svg"
-                                alt="Queue Logo"
-                            />
-                            <div className="data">
-                                <p className="max-h-[80%]">{title}</p>
-                                <h3>Date</h3>
-                                {/* contenteditable spellcheck=false */}
-                                <p>{createdAt}</p>
-                                <h3>Time</h3>
-                                <p>07:30 pm</p>
-                                <h3>Fullname</h3>
-                                <p>{name}</p>
-                                <a className="qr" href="#">
-                                    <img
-                                        src="https://assets.codepen.io/13471/simeyqr.svg"
-                                        alt="A code to use for accessing the simeydotme codepen profile"
-                                    />
-                                </a>
-                            </div>
-
-                            <aside className="divider">
-                                <div className="username">
-                                    <img className="profile" src={image} />
-                                    <span>@{username}</span>{' '}
-                                    <img
-                                        className="verified"
-                                        src="https://assets.codepen.io/13471/verified.png"
-                                    />
-                                </div>
-                                <span className="usernum">
-                                    {id.substring(0, 10)}
-                                </span>
-                            </aside>
-                        </section>
-                    </section>
-                </main>
-            </>
-        )
-    }
-
-    //generate PDF
-    const handlePrint = () => {
-        //   const html2pdf = (await import("html2pdf.js/dist/html2pdf.min.js")).default
-        const printElement = ReactDOMServer.renderToString(content())
-        const options = {
-            margin: 1,
-            filename: `${id}.pdf `,
-            image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { scale: 2 },
-            jsPDF: { unit: 'in', format: 'a4' },
-        }
-        html2pdf().set(options).from(printElement).save()
-    }
-    return (
-        <>
-            {/* <h1>Threads.</h1> */}
-
             <main id="app">
                 <section className="ticket">
                     <header className="front">
                         <div className="holo"></div>
                         <img
                             className="logo"
-                            onClick={handlePrint}
                             src="/assets/images/Q-logo.svg"
                             alt="Queue Logo"
                         />
@@ -227,6 +157,126 @@ const MyOrder = ({ searchParams }: SearchParamProps) => {
                         <div className="holo"></div>
                         <img
                             className="logo"
+                            src="/assets/images/Q-logo.svg"
+                            alt="Queue Logo"
+                        />
+                        <div className="data">
+                            <p className="max-h-[80%]">{title}</p>
+                            <h3>Date</h3>
+                            <p>{createdAt}</p>
+                            <h3>Time</h3>
+                            <p>07:30 pm</p>
+                            <h3>Fullname</h3>
+                            <p>{name}</p>
+                            <a className="qr" href="#">
+                                <img
+                                    src="https://assets.codepen.io/13471/simeyqr.svg"
+                                    alt="A code to use for accessing the simeydotme codepen profile"
+                                />
+                            </a>
+                        </div>
+
+                        <aside className="divider">
+                            <div className="username">
+                                <img className="profile" src={image} />
+                                <span>@{username}</span>{' '}
+                                <img
+                                    className="verified"
+                                    src="https://assets.codepen.io/13471/verified.png"
+                                />
+                            </div>
+                            <span className="usernum">
+                                {id.substring(0, 10)}
+                            </span>
+                        </aside>
+                    </section>
+                </section>
+            </main>
+        )
+    }
+
+    // const p = reactElementToJSXString(contentToPrint())
+    console.log(contentToPrint())
+    const p = jsxToString(contentToPrint()).replace('className', 'class')
+    console.log(p, 'i[po')
+    // setContent(p)
+    useMemo(() => {
+        setContent(p)
+        console.log(contentToPrint(), 'yoyo')
+    }, [name])
+
+    handlePrint = async () => {
+        // const html2pdf = (await import('html2pdf.js/dist/html2pdf.min.js'))
+        //     .default
+        console.log(content, 'haha')
+
+        // const options = {
+        //     margin: 1,
+        //     filename: `${id}.pdf`,
+        //     image: { type: 'jpeg', quality: 0.98 },
+        //     html2canvas: { scale: 2, dpi: 1200, letterRendering: true },
+        //     jsPDF: { unit: 'mm', format: 'a4' },
+        // }
+
+        // let w = document.getElementById("frame").contentWindow
+        // await content.getElementById("").print()
+        // await window.print()
+        const win = await window.open()
+        self.focus()
+        win!.document.open()
+        win!.document.write('<' + 'html' + '><' + 'body' + '>')
+        win!.document.write(content)
+
+        // win!.document.write('<style>' + '' + '</style>')
+        win!.document.write('<' + '/body' + '><' + '/html' + '>')
+        win!.document.close()
+        win!.print()
+        win!.close()
+        // await html2pdf().set(options).from(content).save()
+    }
+
+    console.log(content, 'rip')
+
+    //generate PDF
+    // const handlePrint = async () => {
+    //     const html2pdf = (await import('html2pdf.js/dist/html2pdf.min.js'))
+    //         .default
+    //     console.log(content())
+    //     const printElement = ReactDOMServer.renderToString(content())
+
+    //     console.log(printElement)
+
+    //     const options = {
+    //         margin: 1,
+    //         filename: `${id}.pdf `,
+    //         image: { type: 'jpeg', quality: 0.98 },
+    //         html2canvas: { scale: 2 },
+    //         jsPDF: { unit: 'in', format: 'a4' },
+    //     }
+    //     await html2pdf().set(options).from(printElement).save()
+    // }
+    return (
+        <>
+            {/* <h1>Threads.</h1> */}
+
+            <main id="app">
+                <section className="ticket">
+                    <header className="front">
+                        <div className="holo"></div>
+                        <img
+                            className="logo cursor-pointer"
+                            onClick={() => handlePrint()}
+                            src="/assets/images/Q-logo.svg"
+                            alt="Queue Logo"
+                        />
+                        <aside className="divider"></aside>
+                    </header>
+
+                    <section className="back">
+                        <div className="holo"></div>
+                        <img
+                            className="logo cursor-pointer z-10"
+                            onClick={() => handlePrint()}
                             src="/assets/images/Q-logo.svg"
                             alt="Queue Logo"
                         />

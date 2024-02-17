@@ -472,7 +472,7 @@ body {
 .logo,
 .data {
     position: relative;
-    z-index: 2;
+    /* z-index: 2; */
 }
 
 .logo {
@@ -609,8 +609,8 @@ html {
     color: black;
     font-family: 'Roboto Mono', monospace;
 
-    display: grid;
-    grid: 1fr/1fr;
+    display: flex;
+    /* grid: 1fr/1fr; */
     place-content: center;
     overflow: hidden;
     padding: 50px;
