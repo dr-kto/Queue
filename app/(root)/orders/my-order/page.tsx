@@ -202,7 +202,7 @@ const MyOrder = ({ searchParams }: SearchParamProps) => {
     // setContent(p)
     useMemo(() => {
         setContent(p)
-        console.log(contentToPrint(), 'yoyo')
+        // console.log(contentToPrint(), 'yoyo')
     }, [name])
 
     handlePrint = async () => {
@@ -275,21 +275,21 @@ const MyOrder = ({ searchParams }: SearchParamProps) => {
                     <section className="back">
                         <div className="holo"></div>
                         <img
-                            className="logo cursor-pointer z-10"
+                            className="logo cursor-pointer"
                             onClick={() => handlePrint()}
                             src="/assets/images/Q-logo.svg"
                             alt="Queue Logo"
                         />
                         <div className="data">
-                            <p className="max-h-[80%]">{title}</p>
-                            <h3>Date</h3>
+                            <p className="max-h-[80%] sm:text-base">{title}</p>
+                            <h3 className="sm:text-[14]">Date</h3>
                             {/* contenteditable spellcheck=false */}
-                            <p>{createdAt}</p>
-                            <h3>Time</h3>
-                            <p>07:30 pm</p>
-                            <h3>Fullname</h3>
-                            <p>{name}</p>
-                            <a className="qr" href="#">
+                            <p className="sm:text-base">{createdAt}</p>
+                            <h3 className="sm:text-[14]">Time</h3>
+                            <p className="sm:text-base">07:30 pm</p>
+                            <h3 className="sm:text-[14]">Fullname</h3>
+                            <p className="sm:text-base">{name}</p>
+                            <a className="qr sm:max-w-[60px]" href="#">
                                 <img
                                     src="https://assets.codepen.io/13471/simeyqr.svg"
                                     alt="A code to use for accessing the simeydotme codepen profile"
@@ -300,7 +300,9 @@ const MyOrder = ({ searchParams }: SearchParamProps) => {
                         <aside className="divider">
                             <div className="username">
                                 <img className="profile" src={image} />
-                                <span>@{username}</span>{' '}
+                                <span className="sm:text-[10px]">
+                                    @{username}
+                                </span>{' '}
                                 <img
                                     className="verified"
                                     src="https://assets.codepen.io/13471/verified.png"
