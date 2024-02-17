@@ -281,15 +281,17 @@ const MyOrder = ({ searchParams }: SearchParamProps) => {
                             alt="Queue Logo"
                         />
                         <div className="data">
-                            <p className="max-h-[80%] sm:text-base">{title}</p>
+                            <p className="max-h-[80%] sm:text-[16px]">
+                                {title}
+                            </p>
                             <h3 className="sm:text-[14]">Date</h3>
                             {/* contenteditable spellcheck=false */}
-                            <p className="sm:text-base">{createdAt}</p>
+                            <p className="sm:text-[16px]">{createdAt}</p>
                             <h3 className="sm:text-[14]">Time</h3>
-                            <p className="sm:text-base">07:30 pm</p>
+                            <p className="sm:text-[16px]">07:30 pm</p>
                             <h3 className="sm:text-[14]">Fullname</h3>
-                            <p className="sm:text-base">{name}</p>
-                            <a className="qr sm:max-w-[60px]" href="#">
+                            <p className="sm:text-[16px]">{name}</p>
+                            <a className="qr  sm:max-w-[60px]" href="#">
                                 <img
                                     src="https://assets.codepen.io/13471/simeyqr.svg"
                                     alt="A code to use for accessing the simeydotme codepen profile"
