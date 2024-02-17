@@ -811,6 +811,9 @@ html {
         image-rendering: optimize-speed;
         image-rendering: crisp-edges;
     }
+    /* a.qr img {
+        border-radius: 5px !important;
+    } */
 
     .divider {
         position: absolute;
@@ -929,7 +932,7 @@ html {
             font-size: 16px;
         }
         .usernum {
-            font-size: 14px;
+            font-size: 12px;
         }
         .divider {
             font-size: 12px;

@@ -49,20 +49,20 @@ const Checkout = ({
             userId: userId,
             createdAt: new Date(),
         }
-        console.log(
-            'bidurino',
-            event?.reservationLimit,
-            'monokana',
-            event?.orders.length
-        )
+        // console.log(
+        //     'bidurino',
+        //     event?.reservationLimit,
+        //     'monokana',
+        //     event?.orders.length
+        // )
         if (event?.reservationLimit) {
             if (Number(event?.reservationLimit) >= event?.orders.length) {
-                console.log(
-                    'bidurino',
-                    event?.reservationLimit,
-                    'monokara',
-                    event?.orders.length
-                )
+                // console.log(
+                //     'bidurino',
+                //     event?.reservationLimit,
+                //     'monokara',
+                //     event?.orders.length
+                // )
                 axios.post('/api/event/order', order).then(() => {
                     router.push(`/profile`)
                     // router.push(`/event/${event.id}?success=true`)

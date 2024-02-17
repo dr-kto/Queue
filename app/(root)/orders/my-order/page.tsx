@@ -18,10 +18,14 @@ import ReactDOMServer, { renderToString } from 'react-dom/server'
 import jsxToString from 'jsx-to-string'
 import reactElementToJSXString from 'react-element-to-jsx-string'
 import { Wrapper } from './style'
+import QRCodeStyling from 'qr-code-styling'
 
 const MyOrder = ({ searchParams }: SearchParamProps) => {
     // let [handlePrint, setHandlePrint] = useState()
     let handlePrint = () => {}
+
+    const qrRef = useRef(null)
+
     useEffect(() => {
         if (document) {
             /*
@@ -141,7 +145,7 @@ const MyOrder = ({ searchParams }: SearchParamProps) => {
             if (order.booker.email.length > 15) {
                 setEmail(order.booker.email.slice(0, 15) + '...')
             }
-            console.log(order)
+            // console.log(order)
             setId(order.id)
             if (order.id.length > 10) {
                 setId(order.id.slice(0, 10) + '...')
@@ -152,63 +156,84 @@ const MyOrder = ({ searchParams }: SearchParamProps) => {
     }
     l()
 
-    const contentToPrint = () => {
-        return (
-            <Wrapper>
-                <main id="app">
-                    <section className="ticket">
-                        <header className="front">
-                            <div className="holo"></div>
-                            <img
-                                className="logo"
-                                src="/assets/images/Q-logo.svg"
-                                alt="Queue Logo"
-                            />
-                            <aside className="divider"></aside>
-                        </header>
+    // useEffect(() => {
+    //     qrCode.update({ data: url })
+    //     // @ts-ignore
+    //     qrCode.append(qrRef.current)
+    //     console.log(qrCode, 'qr')
+    // }, [url])
 
-                        <section className="back">
-                            <div className="holo"></div>
-                            <img
-                                className="logo"
-                                src="/assets/images/Q-logo.svg"
-                                alt="Queue Logo"
-                            />
-                            <div className="data">
-                                <p className="max-h-[80%]">{title}</p>
-                                <h3>Date</h3>
-                                <p>{createdAt}</p>
-                                <h3>Time</h3>
-                                <p>07:30 pm</p>
-                                <h3>Fullname</h3>
-                                <p>{name}</p>
-                                <a className="qr" href="#">
-                                    <img
-                                        src="https://assets.codepen.io/13471/simeyqr.svg"
-                                        alt="A code to use for accessing the simeydotme codepen profile"
-                                    />
-                                </a>
-                            </div>
+    // const contentToPrint = () => {
+    //     return (
+    //         <Wrapper>
+    //             <main id="app">
+    //                 <section className="ticket">
+    //                     <header className="front">
+    //                         <div className="holo"></div>
+    //                         <img
+    //                             className="logo"
+    //                             src="/assets/images/Q-logo.svg"
+    //                             alt="Queue Logo"
+    //                         />
+    //                         <aside className="divider"></aside>
+    //                     </header>
 
-                            <aside className="divider">
-                                <div className="username">
-                                    <img className="profile" src={image} />
-                                    <span>@{username}</span>{' '}
-                                    <img
-                                        className="verified"
-                                        src="https://assets.codepen.io/13471/verified.png"
-                                    />
-                                </div>
-                                <span className="usernum">
-                                    {id.substring(0, 10)}
-                                </span>
-                            </aside>
-                        </section>
-                    </section>
-                </main>
-            </Wrapper>
-        )
-    }
+    //                     <section className="back">
+    //                         <div className="holo"></div>
+    //                         <img
+    //                             className="logo"
+    //                             src="/assets/images/Q-logo.svg"
+    //                             alt="Queue Logo"
+    //                         />
+    //                         <div className="data">
+    //                             <p className="max-h-[80%]">{title}</p>
+    //                             <h3>Date</h3>
+    //                             <p>{createdAt}</p>
+    //                             <h3>Time</h3>
+    //                             <p>07:30 pm</p>
+    //                             <h3>Fullname</h3>
+    //                             <p>{name}</p>
+    //                             <a className="qr" href="#">
+    //                                 <img
+    //                                     src="https://assets.codepen.io/13471/simeyqr.svg"
+    //                                     alt="A code to use for accessing the simeydotme codepen profile"
+    //                                 />
+    //                             </a>
+    //                         </div>
+
+    //                         <aside className="divider">
+    //                             <div className="username">
+    //                                 <img className="profile" src={image} />
+    //                                 <span>@{username}</span>{' '}
+    //                                 <img
+    //                                     className="verified"
+    //                                     src="https://assets.codepen.io/13471/verified.png"
+    //                                 />
+    //                             </div>
+    //                             <span className="usernum">
+    //                                 {id.substring(0, 10)}
+    //                             </span>
+    //                         </aside>
+    //                     </section>
+    //                 </section>
+    //             </main>
+    //         </Wrapper>
+    //     )
+    // }
+
+    // const qrCode = new QRCodeStyling({
+    //     width: 300,
+    //     height: 300,
+    //     image: 'https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg',
+    //     dotsOptions: {
+    //         color: '#4267b2',
+    //         type: 'rounded',
+    //     },
+    //     imageOptions: {
+    //         crossOrigin: 'anonymous',
+    //         margin: 20,
+    //     },
+    // })
 
     // const p = reactElementToJSXString(contentToPrint())
     // console.log(contentToPrint())
@@ -223,23 +248,22 @@ const MyOrder = ({ searchParams }: SearchParamProps) => {
     }, [name])
 
     handlePrint = async () => {
-        const html2pdf = (await import('html2pdf.js/dist/html2pdf.min.js'))
-            .default
+        // const html2pdf = (await import('html2pdf.js/dist/html2pdf.min.js')).default
         // console.log(content, 'haha')
 
-        const options = {
-            margin: 1,
-            filename: `${id}.pdf`,
-            image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: {
-                scale: 2,
-                dpi: 1200,
-                useCORS: true,
-                logging: true,
-                letterRendering: true,
-            },
-            jsPDF: { unit: 'mm', format: 'a4' },
-        }
+        // const options = {
+        //     margin: 1,
+        //     filename: `${id}.pdf`,
+        //     image: { type: 'jpeg', quality: 0.98 },
+        //     html2canvas: {
+        //         scale: 2,
+        //         dpi: 1200,
+        //         useCORS: true,
+        //         logging: true,
+        //         letterRendering: true,
+        //     },
+        //     jsPDF: { unit: 'mm', format: 'a4' },
+        // }
 
         // let w = document.getElementById("frame").contentWindow
         // await content.getElementById("").print()
@@ -249,7 +273,7 @@ const MyOrder = ({ searchParams }: SearchParamProps) => {
         // }
         await window.print()
         // const win = await window.open()
-        self.focus()
+        // self.focus()
         // win!.document.open()
         // win!.document.write('<' + 'html' + '><' + 'body' + '>')
         // win!.document.write(content)
@@ -286,72 +310,64 @@ const MyOrder = ({ searchParams }: SearchParamProps) => {
     return (
         <>
             {/* <h1>Threads.</h1> */}
-            <Wrapper ref={refContent}>
-                <main id="app">
-                    <section className="ticket">
-                        <header className="front">
-                            <div className="holo"></div>
-                            <img
-                                className="logo cursor-pointer"
-                                onClick={() => handlePrint()}
-                                src="/assets/images/Q-logo.svg"
-                                alt="Queue Logo"
-                            />
-                            <aside className="divider"></aside>
-                        </header>
+            <main id="app" ref={refContent}>
+                <section className="ticket">
+                    <header className="front">
+                        <div className="holo"></div>
+                        <img
+                            className="logo cursor-pointer"
+                            onClick={() => handlePrint()}
+                            src="/assets/images/Q-logo.svg"
+                            alt="Queue Logo"
+                        />
+                        <aside className="divider"></aside>
+                    </header>
 
-                        <section className="back">
-                            <div className="holo"></div>
-                            <img
-                                className="logo cursor-pointer z-3"
-                                onClick={() => handlePrint()}
-                                src="/assets/images/Q-logo.svg"
-                                alt="Queue Logo"
-                            />
-                            <div className="data">
-                                <p className="max-w-[80%]">{title}</p>
-                                <h3>Date</h3>
-                                {/* contenteditable spellcheck=false */}
-                                <p>
-                                    {
-                                        formatDateTime(new Date(createdAt))
-                                            .dateOnly
-                                    }
-                                </p>
-                                <h3>Time</h3>
-                                <p>
-                                    {
-                                        formatDateTime(new Date(startTime))
-                                            .timeOnly
-                                    }{' '}
-                                    -{' '}
-                                    {formatDateTime(new Date(endTime)).timeOnly}
-                                </p>
-                                <h3>Fullname</h3>
-                                <p>{name}</p>
-                                <a className="qr" href={url}>
-                                    <img
-                                        src="https://assets.codepen.io/13471/simeyqr.svg"
-                                        alt="A code to use for accessing the simeydotme codepen profile"
-                                    />
-                                </a>
+                    <section className="back">
+                        <div className="holo"></div>
+                        <img
+                            className="logo cursor-pointer z-3"
+                            onClick={() => handlePrint()}
+                            src="/assets/images/Q-logo.svg"
+                            alt="Queue Logo"
+                        />
+                        <div className="data">
+                            <p className="max-w-[80%]">{title}</p>
+                            <h3>Date</h3>
+                            {/* contenteditable spellcheck=false */}
+                            <p>
+                                {formatDateTime(new Date(createdAt)).dateOnly}
+                            </p>
+                            <h3>Time</h3>
+                            <p>
+                                {formatDateTime(new Date(startTime)).timeOnly} -{' '}
+                                {formatDateTime(new Date(endTime)).timeOnly}
+                            </p>
+                            <h3>Fullname</h3>
+                            <p>{name}</p>
+                            <a className="qr" ref={qrRef} href={url}>
+                                <img
+                                    className=" rounded-sm"
+                                    src="/assets/images/qr-game.png"
+                                    alt="A code to use for accessing the simeydotme codepen profile"
+                                />
+                            </a>
+                        </div>
+
+                        <aside className="divider">
+                            <div className="username">
+                                <img className="profile" src={image} />
+                                <span className="">@{username}</span>{' '}
+                                <img
+                                    className="verified"
+                                    src="https://assets.codepen.io/13471/verified.png"
+                                />
                             </div>
-
-                            <aside className="divider">
-                                <div className="username">
-                                    <img className="profile" src={image} />
-                                    <span className="">@{username}</span>{' '}
-                                    <img
-                                        className="verified"
-                                        src="https://assets.codepen.io/13471/verified.png"
-                                    />
-                                </div>
-                                <span className="usernum">{id}</span>
-                            </aside>
-                        </section>
+                            <span className="usernum">{id}</span>
+                        </aside>
                     </section>
-                </main>
-            </Wrapper>
+                </section>
+            </main>
             {/*Social actions */}
             {/* <a
                 className="social-icon codepen"

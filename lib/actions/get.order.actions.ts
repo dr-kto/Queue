@@ -190,7 +190,7 @@ export async function getOrdersByUser({
             },
         })
         // revalidatePath(path)
-        console.log('not failed', order)
+        // console.log('not failed', order)
         return JSON.parse(JSON.stringify(order))
         // redirect(`${process.env.NEXT_PUBLIC_SERVER_URL}/profile`)
         // redirect(`${process.env.NEXT_PUBLIC_SERVER_URL}/order/${newOrder.id}`)
