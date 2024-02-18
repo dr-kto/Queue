@@ -74,10 +74,10 @@ const EventDetails = async ({
                                     </p>
                                 </div>
 
-                                <p className="p-medium-18 ml-2 mt-2 sm:mt-0">
-                                    by{' '}
+                                <p className="p-medium-20 ml-2 mt-2 sm:mt-0 gap-2 flex flex-row">
+                                    <div className=" text-grey-500">by</div>
                                     <span className="text-primary-500">
-                                        {event.owner.name}
+                                        @{event.owner.username}
                                     </span>
                                 </p>
                             </div>
