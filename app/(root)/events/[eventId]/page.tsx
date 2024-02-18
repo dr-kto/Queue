@@ -8,6 +8,7 @@ import {
 import getCurrentUser from '@/lib/actions/getCurrentUser'
 import { formatDateTime } from '@/lib/utils'
 import { SearchEventParamProps } from '@/types'
+import clsx from 'clsx'
 import Image from 'next/image'
 
 const EventDetails = async ({
@@ -52,7 +53,14 @@ const EventDetails = async ({
 
                             <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
                                 <div className="flex gap-3">
-                                    <p className="p-bold-20 rounded-full bg-green-500/10 px-5 py-2 text-green-700">
+                                    <p
+                                        className={clsx(
+                                            `p-bold-20 rounded-full bg-green-500/10 px-5 py-2 text-green-700`,
+                                            ticketCount === 0
+                                                ? 'bg-red-500/10 text-red-700'
+                                                : ''
+                                        )}
+                                    >
                                         {event.isNoLimit
                                             ? 'No limit'
                                             : `${
