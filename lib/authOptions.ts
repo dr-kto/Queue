@@ -7,6 +7,7 @@ import { PrismaAdapter } from '@next-auth/prisma-adapter'
 // import prisma from '@/app/libs/prismadb'
 import prisma from '@/lib/prisma'
 import { AuthOptions } from 'next-auth'
+import { Console } from 'console'
 
 export const authOptions: AuthOptions = {
     adapter: PrismaAdapter(prisma),
@@ -36,15 +37,17 @@ export const authOptions: AuthOptions = {
             credentials: {
                 email: { label: 'email', type: 'text' },
                 password: { label: 'password', type: 'password' },
-                username: { label: 'username', type: 'text' },
+                // username: { label: 'username', type: 'text' },
             },
             async authorize(credentials) {
+                console.log(credentials, 'not credit')
+
                 if (
                     !credentials?.email ||
-                    !credentials?.password ||
-                    !credentials?.username
+                    !credentials?.password
+                    // ||                    !credentials?.username
                 ) {
-                    throw new Error('Invalid credentials')
+                    throw new Error('Invalid credentialsss')
                 }
 
                 const user = await prisma.user.findUnique({
@@ -55,14 +58,18 @@ export const authOptions: AuthOptions = {
 
                 // console.log('lmao', user, 'lmao')
 
-                const username = await prisma.user.findUnique({
-                    where: {
-                        username: credentials.username,
-                    },
-                })
+                // const username = await prisma.user.findUnique({
+                //     where: {
+                //         username: credentials.username,
+                //     },
+                // })
 
-                if (!user || !user?.password || !username) {
-                    throw new Error('Invalid credentials')
+                if (
+                    !user ||
+                    !user?.password
+                    // ||  !username
+                ) {
+                    throw new Error('Invalid credentialss')
                 }
 
                 // const isCorrectPassword = await bcrypt.compare(

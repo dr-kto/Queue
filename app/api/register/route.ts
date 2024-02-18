@@ -5,7 +5,7 @@ import { NextResponse } from 'next/server'
 
 export async function POST(request: Request) {
     const body = await request.json()
-    const { email, username, name, role, password } = body
+    const { email, username, name, role, location, password } = body
     const image = '/assets/images/placeholderUser.jpg'
     // const hashedPassword = await bcrypt.hash(password, 12)
 

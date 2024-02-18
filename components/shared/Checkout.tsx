@@ -59,6 +59,7 @@ const Checkout = ({
         // )
         if (!isOwner) {
             if (event?.reservationLimit) {
+                console.log(event.reservationLimit, ' kk ', event.orders.length)
                 if (Number(event?.reservationLimit) >= event?.orders.length) {
                     // console.log(
                     //     'bidurino',
@@ -86,11 +87,14 @@ const Checkout = ({
     }
 
     async function l() {
+        console.log('kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk', userId)
         const i = await isAlreadyOrdered({ eventId: event.id, userId })
         // @ts-ignore
         setAlreadyOrdered(i)
 
         const eventById = await getEventById(event.id)
+
+        // console.log(eventById.owner.id, 'kkkk', userId, alreadyOrdered)
 
         if (eventById.owner.id === userId) {
             setIsOwner(true)

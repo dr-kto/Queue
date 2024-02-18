@@ -43,8 +43,6 @@ const AuthForm = () => {
         formState: { errors },
     } = useForm<FieldValues>({
         defaultValues: {
-            name: '',
-            username: `user-${cuid()}`,
             email: '',
             password: '',
         },
@@ -105,7 +103,7 @@ const AuthForm = () => {
 
                 if (callback?.ok) {
                     // setVariant('ALMOST DONE')
-                    router.push('/chats')
+                    router.push('/')
                 }
             })
             .finally(() => setIsLoading(false))

@@ -8,6 +8,7 @@ import {
 import getCurrentUser from '@/lib/actions/getCurrentUser'
 import { formatDateTime } from '@/lib/utils'
 import { SearchEventParamProps } from '@/types'
+import clsx from 'clsx'
 import Image from 'next/image'
 
 const EventDetails = async ({
@@ -32,6 +33,19 @@ const EventDetails = async ({
     const ticketCount =
         Number(event.reservationLimit) - Number(event.orders.length)
 
+    // const handleClick = () => {
+    //     axios.post('/api/chats', { userId: event.userId })
+    // }
+    // <a href={`/chats/${event.userId}`}>
+    //                                     <span
+    //                                         className="text-primary-500"
+    //                                         // @ts-ignore
+    //                                         // onClick={handleClick()}
+    //                                     >
+    //                                         @{event.owner.username}
+    //                                     </span>
+    //                                 </a>
+
     return (
         <>
             <section className="flex justify-center bg-primary-50 bg-dotted-pattern bg-contain">
@@ -52,7 +66,14 @@ const EventDetails = async ({
 
                             <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
                                 <div className="flex gap-3">
-                                    <p className="p-bold-20 rounded-full bg-green-500/10 px-5 py-2 text-green-700">
+                                    <p
+                                        className={clsx(
+                                            `p-bold-20 rounded-full  px-5 py-2`,
+                                            ticketCount === 0
+                                                ? ` text-red-700 bg-red-500/10`
+                                                : `text-green-700 bg-green-500/10`
+                                        )}
+                                    >
                                         {event.isNoLimit
                                             ? 'No limit'
                                             : `${
@@ -61,15 +82,17 @@ const EventDetails = async ({
                                                       : ticketCount
                                               } ticket available`}
                                     </p>
-                                    <p className="p-medium-16 rounded-full bg-grey-500/10 px-4 py-2.5 text-grey-500">
-                                        {event.category.name}
-                                    </p>
+                                    <a href="">
+                                        <p className="p-medium-20 rounded-full bg-grey-500/10 px-4 py-2.5 text-grey-500">
+                                            {event.category.name}
+                                        </p>
+                                    </a>
                                 </div>
 
-                                <p className="p-medium-18 ml-2 mt-2 sm:mt-0">
-                                    by{' '}
+                                <p className="p-medium-20 ml-2 mt-2 sm:mt-0 gap-2 flex flex-row">
+                                    <div className=" text-grey-500">by</div>
                                     <span className="text-primary-500">
-                                        {event.owner.name}
+                                        @{event.owner.username}
                                     </span>
                                 </p>
                             </div>
@@ -131,9 +154,15 @@ const EventDetails = async ({
                             <p className="p-medium-16 lg:p-regular-18 whitespace-pre-line">
                                 {event.description}
                             </p>
-                            <p className="p-medium-16 lg:p-regular-18 truncate text-primary-500 underline">
-                                {event.url}
-                            </p>
+                            <a
+                                href={event.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                <p className="p-medium-16 lg:p-regular-18 truncate text-primary-500 underline cursor-pointer">
+                                    {event.url}
+                                </p>
+                            </a>
                         </div>
                     </div>
                 </div>
