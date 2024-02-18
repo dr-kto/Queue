@@ -26,6 +26,7 @@ export const authOptions: AuthOptions = {
                     email: profile.email,
                     image: profile.picture,
                     role: profile.role ? profile.role : 'user',
+                    location: profile.location ? profile.location : 'Earth',
                     username: profile.email.split('@')[0],
                 }
             },

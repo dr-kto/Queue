@@ -9,9 +9,9 @@ import { User } from '@prisma/client'
 
 type UserCollectionProps = {
     data: User[]
-    emptyTitle: string
-    emptyStateSubtext: string
-    limit: number
+    emptyTitle?: string
+    emptyStateSubtext?: string
+    limit?: number
     page: number | string
     totalPages?: number
     urlParamName?: string
@@ -23,6 +23,7 @@ const UserCollection = ({
     emptyStateSubtext,
     page,
     totalPages = 0,
+    // totalPages = 0,
     urlParamName,
 }: UserCollectionProps) => {
     return (

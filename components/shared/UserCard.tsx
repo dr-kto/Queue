@@ -86,13 +86,13 @@ const UserCard = ({ user }: UserCardProps) => {
             {/* <button className="contact-user ">contact</button>
                 <button className="contact-user ">follow</button> */}
             <div className="bg-inherit flex gap-5 p-6 justify-start w-full">
-                <Button asChild size="lg" className="userCardButton  sm:flex">
+                {/* <Button asChild size="lg" className="userCardButton  sm:flex">
                     <Link href="/#events">follow</Link>
-                </Button>
+                </Button> */}
                 <Button
                     asChild
                     size="lg"
-                    className="userCardButton  sm:flex"
+                    className="userCardButton  sm:flex w-full max-w-[80%]"
                     onClick={handleClick}
                 >
                     <Link href="">contact</Link>

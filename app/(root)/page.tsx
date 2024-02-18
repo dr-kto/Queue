@@ -18,6 +18,12 @@ export default async function Home({ searchParams }: SearchParamProps) {
         page,
         limit: 3,
     })
+    const eventsWithoutQuery = await getAllEvents({
+        query: searchText,
+        category,
+        page,
+        limit: 3,
+    })
 
     return (
         <>
@@ -60,7 +66,9 @@ export default async function Home({ searchParams }: SearchParamProps) {
 
                 <div className="flex w-full flex-col gap-5 md:flex-row">
                     <Search />
-                    <CategoryFilter />
+                    <CategoryFilter
+                        eventsWithoutQuery={eventsWithoutQuery?.data}
+                    />
                 </div>
 
                 <Collection

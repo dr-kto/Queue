@@ -150,11 +150,12 @@ export type GetAllEventsParams = {
     page: number
 }
 export type GetAllUsersParams = {
-    query: string
+    query?: string
     userId?: string
-    category: string
-    limit: number
-    page: number
+    category?: string
+    location?: string
+    limit?: number
+    page?: number
 }
 
 export type GetEventsByUserParams = {

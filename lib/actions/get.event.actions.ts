@@ -177,6 +177,9 @@ export async function getAllEvents({
         //         categoryCondition ? { category: categoryCondition._id } : {},
         //     ],
         // }
+        if ((query.length > 0, category.length > 0)) {
+            page = 1
+        }
         const skipAmount = (Number(page) - 1) * limit
 
         const eventsQuery = await prisma.event.findMany({

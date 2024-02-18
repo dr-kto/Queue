@@ -17,22 +17,30 @@ const PeoplePage = async ({ searchParams }: SearchPeopleParamProps) => {
 
     const usersPage = Number(searchParams?.usersPage) || 1
 
-    const organizedEvents = await getEventsByUser({ userId, page: usersPage })
+    console.log(usersPage, 'usersPage')
+
+    // const organizedEvents = await getEventsByUser({ userId, page: usersPage })
 
     const searchText = (searchParams?.query as string) || ''
     const category = (searchParams?.category as string) || ''
+    const location = (searchParams?.location as string) || ''
+    const limit = 3
 
     const users = await getAllUsers({
         query: searchText,
-        userId,
+        userId: userId,
         category,
-        limit: 2,
+        location: location,
+        limit: limit,
         page: usersPage,
+    })
+    const usersWithoutQuery = await getAllUsers({
+        userId: userId,
     })
     // console.log(searchParams, 'jk')
     // console.log(usersPage, '11111')
     // const i = await getCurrentUser()
-    const i = await getUsers()
+    // const i = await getUsers()
     // console.log(users, 'dsfdfsd', i)
 
     return (
@@ -49,16 +57,21 @@ const PeoplePage = async ({ searchParams }: SearchPeopleParamProps) => {
                     <Search />
                     {/* {users?.toString()} */}
 
-                    {/* <CategoryFilter /> */}
+                    <CategoryFilter
+                        urlParamName="location"
+                        placeholder="Location"
+                        users={users?.data}
+                        usersWithoutQuery={usersWithoutQuery?.data}
+                    />
                 </div>
                 <UserCollection
-                    data={users}
+                    data={users?.data}
                     emptyTitle="There is no crowd"
                     emptyStateSubtext="don't worry, you'll find them!"
-                    limit={3}
+                    limit={limit}
                     page={usersPage}
                     urlParamName="usersPage"
-                    totalPages={organizedEvents?.totalPages}
+                    totalPages={users?.totalPages}
                 />
             </section>
         </>

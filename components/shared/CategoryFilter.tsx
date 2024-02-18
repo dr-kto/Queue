@@ -8,8 +8,11 @@ import {
     SelectValue,
 } from '@/components/ui/select'
 import { getAllCategories } from '@/lib/actions/category.actions'
+import { getAllUsers } from '@/lib/actions/get.user.actions'
+import getCurrentUser from '@/lib/actions/getCurrentUser'
 // import { ICategory } from '@/lib/database/models/category.model'
 import { formUrlQuery, removeKeysFromQuery } from '@/lib/utils'
+import { Event, User } from '@prisma/client'
 // import { Category } from '@prisma/client'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
@@ -19,16 +22,49 @@ interface eCategory extends Document {
     name: string
 }
 
-const CategoryFilter = () => {
+interface CategoryFilterParams {
+    placeholder?: string
+    urlParamName?: string
+    users?: User[]
+    usersWithoutQuery?: User[]
+    eventsWithoutQuery?: Event[]
+}
+
+const CategoryFilter: React.FC<CategoryFilterParams> = ({
+    placeholder = 'Category',
+    urlParamName = 'category',
+    users = [],
+    usersWithoutQuery = [],
+    eventsWithoutQuery = [],
+}) => {
     const [categories, setCategories] = useState<eCategory[]>([])
     const router = useRouter()
     const searchParams = useSearchParams()
 
     useEffect(() => {
         const getCategories = async () => {
-            const categoryList = await getAllCategories()
+            if (urlParamName === 'category') {
+                // eventsWithoutQuery
+                const categoryList = await getAllCategories()
 
-            categoryList && setCategories(categoryList as eCategory[])
+                categoryList && setCategories(categoryList as eCategory[])
+            } else if (urlParamName === 'location') {
+                const locations = usersWithoutQuery.map((user) => {
+                    console.log(user, 'user')
+                    return { id: user.id, name: user.location || '' }
+                })
+                // console.log(users, 'USERS', locations, 'LOCATIONS')
+                // console.log(usersWithoutQuery, 'lopa')
+                let resArr = [] as any[]
+                locations.forEach(function (item) {
+                    let i = resArr.findIndex((x) => x.name == item.name)
+                    if (i <= -1) {
+                        resArr.push({ id: item.id, name: item.name })
+                    }
+                })
+                // console.log(locations, 'targeted location')
+                users && setCategories(resArr as eCategory[])
+            }
         }
 
         getCategories()
@@ -40,13 +76,13 @@ const CategoryFilter = () => {
         if (category && category !== 'All') {
             newUrl = formUrlQuery({
                 params: searchParams!.toString(),
-                key: 'category',
+                key: urlParamName,
                 value: category,
             })
         } else {
             newUrl = removeKeysFromQuery({
                 params: searchParams!.toString(),
-                keysToRemove: ['category'],
+                keysToRemove: [urlParamName],
             })
         }
 
@@ -56,7 +92,7 @@ const CategoryFilter = () => {
     return (
         <Select onValueChange={(value: string) => onSelectCategory(value)}>
             <SelectTrigger className="select-field">
-                <SelectValue placeholder="Category" />
+                <SelectValue placeholder={placeholder} />
             </SelectTrigger>
             <SelectContent>
                 <SelectItem value="All" className="select-item p-regular-14">

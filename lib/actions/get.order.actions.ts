@@ -85,25 +85,17 @@ export async function getOrdersByEvent({
         const order = await prisma.order.findMany({
             where: {
                 eventId: eventId,
-                AND: [
-                    {
-                        // eventId: eventId,
-                        booker: {
-                            OR: [
-                                {
-                                    email: {
-                                        contains: searchString,
-                                        // mode: 'insensitive',
-                                    },
-                                },
-                            ],
-                            name: {
-                                contains: searchString,
-                                mode: 'insensitive',
-                            },
-                        },
+                // eventId: eventId,
+                booker: {
+                    email: {
+                        contains: searchString,
+                        mode: 'insensitive',
                     },
-                ],
+                    name: {
+                        contains: searchString,
+                        mode: 'insensitive',
+                    },
+                },
             },
             include: {
                 booker: true,

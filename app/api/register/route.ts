@@ -17,6 +17,7 @@ export async function POST(request: Request) {
             password,
             image,
             role: 'user',
+            location: 'Earth',
         },
     })
 
