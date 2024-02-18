@@ -131,9 +131,11 @@ const EventDetails = async ({
                             <p className="p-medium-16 lg:p-regular-18 whitespace-pre-line">
                                 {event.description}
                             </p>
-                            <p className="p-medium-16 lg:p-regular-18 truncate text-primary-500 underline">
-                                {event.url}
-                            </p>
+                            <a href={event.url}>
+                                <p className="p-medium-16 lg:p-regular-18 truncate text-primary-500 underline">
+                                    {event.url}
+                                </p>
+                            </a>
                         </div>
                     </div>
                 </div>

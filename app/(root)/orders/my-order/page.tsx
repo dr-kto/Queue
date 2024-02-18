@@ -132,7 +132,7 @@ const MyOrder = ({ searchParams }: SearchParamProps) => {
             }
             setUsername(order.booker.username)
             if (order.booker.username.length > 10) {
-                setUsername(order.booker.username.slice(0, 10) + '...')
+                setUsername(order.booker.username.slice(0, 10) + '')
             }
             setImage(order.booker.image)
 
@@ -147,8 +147,8 @@ const MyOrder = ({ searchParams }: SearchParamProps) => {
             }
             // console.log(order)
             setId(order.id)
-            if (order.id.length > 10) {
-                setId(order.id.slice(0, 10) + '...')
+            if (order.id.length > 7) {
+                setId(order.id.slice(0, 7) + '')
             }
         } catch (err) {
             console.log(err)
@@ -357,7 +357,9 @@ const MyOrder = ({ searchParams }: SearchParamProps) => {
                         <aside className="divider">
                             <div className="username">
                                 <img className="profile" src={image} />
-                                <span className="">@{username}</span>{' '}
+                                <span className="">
+                                    @{username.split('@')[0]}
+                                </span>{' '}
                                 <img
                                     className="verified"
                                     src="https://assets.codepen.io/13471/verified.png"

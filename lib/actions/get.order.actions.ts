@@ -47,28 +47,6 @@ export const isAlreadyOrdered = async ({
             }
         }
 
-        // const userToCheck = await prisma.user.findFirst({
-        //     where: {
-        //         id: userId,
-        //         orders: {
-        //             some: {
-        //                 eve: eventId,
-        //             },
-        //         },
-        //     },
-        //     include: {
-        //         orders: true,
-        //     },
-        // })
-
-        // if (
-        //     Number(eventToCheck?.reservationLimit) -
-        //     Number(eventToCheck?.orders.length) === 0
-        //     // || userToCheck
-        // ) {
-        //     return true
-        //     // return JSON.parse(JSON.stringify(newOrder))
-        // }
         return false
     } catch (error) {
         handleError(error)
