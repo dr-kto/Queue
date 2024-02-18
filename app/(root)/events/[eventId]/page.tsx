@@ -18,24 +18,30 @@ const EventDetails = async ({
     const currentUser = await getCurrentUser()
     const userId = currentUser?.id as string
     // console.log({ event })
+    const page = Number(searchParams?.page) || 1
+
+    const limit = 2
 
     const relatedEvents = await getRelatedEventsByCategory({
-        categoryId: event.category.id,
+        categoryName: event.category.name,
         eventId: event.id,
-        page: searchParams.page as string,
+        limit: limit,
+        page: page,
     })
 
     return (
         <>
             <section className="flex justify-center bg-primary-50 bg-dotted-pattern bg-contain">
                 <div className="grid grid-cols-1 md:grid-cols-2 2xl:max-w-7xl">
-                    <Image
-                        src={event.image}
-                        alt="hero image"
-                        width={1000}
-                        height={1000}
-                        className="h-full min-h-[300px] object-cover object-center"
-                    />
+                    {event.image && (
+                        <Image
+                            src={event.image}
+                            alt="hero image"
+                            width={1000}
+                            height={1000}
+                            className="h-full min-h-[300px] object-cover object-center"
+                        />
+                    )}
 
                     <div className="flex w-full flex-col gap-8 p-5 md:p-10">
                         <div className="flex flex-col gap-6">
@@ -72,7 +78,7 @@ const EventDetails = async ({
                                     width={32}
                                     height={32}
                                 />
-                                <div className="p-medium-16 lg:p-regular-20 flex flex-wrap items-center">
+                                <div className="p-medium-16 lg:p-regular-20 flex flex-wrap items-center flex-col">
                                     <p>
                                         {
                                             formatDateTime(event.startDateTime)
@@ -135,8 +141,8 @@ const EventDetails = async ({
                     emptyTitle="No Events Found"
                     emptyStateSubtext="Come back later"
                     collectionType="All_Events"
-                    limit={3}
-                    page={searchParams.page as string}
+                    limit={limit}
+                    page={page}
                     totalPages={relatedEvents?.totalPages}
                 />
             </section>

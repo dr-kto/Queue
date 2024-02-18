@@ -19,7 +19,7 @@ import { eventDefaultValues } from '@/lib/constants'
 import Dropdown from './Dropdown'
 import { Textarea } from '@/components/ui/textarea'
 import { FileUploader } from './FileUploader'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import DatePicker from 'react-datepicker'
 import { useUploadThing } from '@/lib/uploadthing'
@@ -78,6 +78,11 @@ const EventForm = ({ userId, type, event, eventId }: EventFormProps) => {
             categoryId: initialValues.categoryId || '',
         },
     })
+
+    // useEffect(() => {
+    //     console.log(form.getFieldState('isNoLimit'))
+    // }, [form])
+
     async function onSubmit(values: z.infer<typeof eventFormSchema>) {
         let uploadedImageUrl = values.image
 
@@ -89,6 +94,10 @@ const EventForm = ({ userId, type, event, eventId }: EventFormProps) => {
             }
 
             uploadedImageUrl = uploadedImages[0].url
+        }
+
+        if (values.isNoLimit) {
+            values.reservationLimit = ''
         }
 
         if (type === 'Create') {
@@ -254,7 +263,7 @@ const EventForm = ({ userId, type, event, eventId }: EventFormProps) => {
                                 <FormControl>
                                     <div className="flex-center h-[54px] w-full overflow-hidden rounded-full bg-grey-50 px-4 py-2">
                                         <Image
-                                            src="/assets/icons/location-grey.svg"
+                                            src="/assets/icons/location.svg"
                                             alt="calendar"
                                             width={24}
                                             height={24}
@@ -352,7 +361,7 @@ const EventForm = ({ userId, type, event, eventId }: EventFormProps) => {
                                 <FormControl>
                                     <div className="flex-center h-[54px] w-full overflow-hidden rounded-full bg-grey-50 px-4 py-2">
                                         <Image
-                                            src="/assets/images/placeholderUser.jpg"
+                                            src="/assets/icons/bookers.svg"
                                             alt="limit count"
                                             width={24}
                                             height={24}
@@ -362,8 +371,10 @@ const EventForm = ({ userId, type, event, eventId }: EventFormProps) => {
                                             type="number"
                                             placeholder="Visitor Limit"
                                             {...field}
+                                            // disabled
                                             className="p-regular-16 border-0 bg-grey-50 outline-offset-0 focus:border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
                                         />
+                                        {/* {'back'} */}
                                         <FormField
                                             control={form.control}
                                             name="isNoLimit"
@@ -384,7 +395,7 @@ const EventForm = ({ userId, type, event, eventId }: EventFormProps) => {
                                                                 checked={
                                                                     field.value
                                                                 }
-                                                                id="isFree"
+                                                                id="isNoLimit"
                                                                 className="mr-2 h-5 w-5 border-2 border-primary-500"
                                                             />
                                                         </div>

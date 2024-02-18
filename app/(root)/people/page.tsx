@@ -17,7 +17,7 @@ const PeoplePage = async ({ searchParams }: SearchPeopleParamProps) => {
 
     const usersPage = Number(searchParams?.usersPage) || 1
 
-    console.log(usersPage, 'usersPage')
+    // console.log(usersPage, 'usersPage')
 
     // const organizedEvents = await getEventsByUser({ userId, page: usersPage })
 

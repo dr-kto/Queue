@@ -50,7 +50,7 @@ const CategoryFilter: React.FC<CategoryFilterParams> = ({
                 categoryList && setCategories(categoryList as eCategory[])
             } else if (urlParamName === 'location') {
                 const locations = usersWithoutQuery.map((user) => {
-                    console.log(user, 'user')
+                    // console.log(user, 'user')
                     return { id: user.id, name: user.location || '' }
                 })
                 // console.log(users, 'USERS', locations, 'LOCATIONS')

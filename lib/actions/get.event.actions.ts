@@ -280,7 +280,7 @@ export async function getEventsByUser({
 }
 
 export async function getRelatedEventsByCategory({
-    categoryId,
+    categoryName,
     eventId,
     limit = 3,
     page = 1,
@@ -290,13 +290,13 @@ export async function getRelatedEventsByCategory({
 
         const eventsQuery = await prisma.event.findMany({
             where: {
+                category: { name: categoryName },
                 NOT: {
                     id: eventId,
                 },
                 // id: {
                 //     equals: eventId,
                 // },
-                AND: [{ category: { id: categoryId } }],
             },
             skip: skipAmount,
             take: limit,
@@ -308,10 +308,10 @@ export async function getRelatedEventsByCategory({
 
         const totalEvents = await prisma.event.count({
             where: {
-                id: {
-                    equals: eventId,
+                category: { name: categoryName },
+                NOT: {
+                    id: eventId,
                 },
-                AND: [{ category: { id: categoryId } }],
             },
         })
 

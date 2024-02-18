@@ -41,7 +41,7 @@ const ProfileDrawer: React.FC<ProfileDrawerProps> = ({
     }, [data.name, otherUser.name])
 
     const { members } = useActiveList()
-    console.log({ members })
+    // console.log({ members })
     const isActive = members.indexOf(otherUser?.email!) !== -1
 
     const statusText = useMemo(() => {
