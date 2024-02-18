@@ -20,7 +20,7 @@ const EventDetails = async ({
     // console.log({ event })
     const page = Number(searchParams?.page) || 1
 
-    const limit = 2
+    const limit = 3
 
     const relatedEvents = await getRelatedEventsByCategory({
         categoryName: event.category.name,
