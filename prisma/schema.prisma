@@ -82,9 +82,9 @@ model Event {
 model Order {
     id        String   @id @default(auto()) @map("_id") @db.ObjectId
     createdAt DateTime @default(now())
-    booker    User     @relation(fields: [bookerId], references: [id])
+    booker    User     @relation(fields: [bookerId], references: [id], onDelete: Cascade)
     bookerId  String   @db.ObjectId
-    event     Event    @relation(fields: [eventId], references: [id])
+    event     Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
     eventId   String   @db.ObjectId
 }
 
