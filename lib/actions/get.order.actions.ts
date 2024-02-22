@@ -106,6 +106,7 @@ export async function getOrdersByEvent({
 export async function getCurrentOrderByEventAndUser({
     eventId,
     userId,
+    email,
 }: getCurrentOrderByEventAndUserParams) {
     try {
         if (!eventId) throw new Error('Event ID required')
@@ -133,6 +134,7 @@ export async function getCurrentOrderByEventAndUser({
                         // eventId: eventId
                         booker: {
                             id: userId,
+                            email: email,
                         },
                     },
                 ],
