@@ -56,6 +56,8 @@ export const isAlreadyOrdered = async ({
 export async function getOrdersByEvent({
     searchString,
     eventId,
+    userName,
+    email,
 }: GetOrdersByEventParams) {
     try {
         if (!eventId) throw new Error('Event ID required')
@@ -79,11 +81,11 @@ export async function getOrdersByEvent({
                 // eventId: eventId,
                 booker: {
                     email: {
-                        contains: searchString,
+                        contains: email,
                         mode: 'insensitive',
                     },
                     name: {
-                        contains: searchString,
+                        contains: userName,
                         mode: 'insensitive',
                     },
                 },
@@ -106,7 +108,6 @@ export async function getOrdersByEvent({
 export async function getCurrentOrderByEventAndUser({
     eventId,
     userId,
-    email,
 }: getCurrentOrderByEventAndUserParams) {
     try {
         if (!eventId) throw new Error('Event ID required')
@@ -134,7 +135,6 @@ export async function getCurrentOrderByEventAndUser({
                         // eventId: eventId
                         booker: {
                             id: userId,
-                            email: email,
                         },
                     },
                 ],
