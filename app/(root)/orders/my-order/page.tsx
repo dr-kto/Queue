@@ -131,8 +131,8 @@ const MyOrder = ({ searchParams }: SearchParamProps) => {
                 setName(order.booker.name.slice(0, 25) + '...')
             }
             setUsername(order.booker.username)
-            if (order.booker.username.length > 10) {
-                setUsername(order.booker.username.slice(0, 10) + '')
+            if (order.booker.username.length > 20) {
+                setUsername(order.booker.username.slice(0, 20) + '')
             }
             setImage(order.booker.image)
 
