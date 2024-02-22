@@ -54,12 +54,12 @@ const PeoplePage = async ({ searchParams }: SearchPeopleParamProps) => {
                 </h2>
 
                 <div className="flex w-full flex-col gap-5 md:flex-row">
-                    <Search />
+                    <Search placeholder="Search by name" />
                     {/* {users?.toString()} */}
 
                     <CategoryFilter
                         urlParamName="location"
-                        placeholder="Location"
+                        placeholder="Filter by location"
                         users={users?.data}
                         usersWithoutQuery={usersWithoutQuery?.data}
                     />
