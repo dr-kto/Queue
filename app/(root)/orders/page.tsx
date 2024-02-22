@@ -7,8 +7,15 @@ import { SearchParamProps } from '@/types'
 const Orders = async ({ searchParams }: SearchParamProps) => {
     const eventId = (searchParams?.eventId as string) || ''
     const searchText = (searchParams?.query as string) || ''
+    const userName = (searchParams?.userName as string) || ''
+    const email = (searchParams?.email as string) || ''
 
-    const orders = await getOrdersByEvent({ eventId, searchString: searchText })
+    const orders = await getOrdersByEvent({
+        eventId,
+        searchString: searchText,
+        userName,
+        email,
+    })
 
     // console.log(orders, 'rip')
 
@@ -23,7 +30,7 @@ const Orders = async ({ searchParams }: SearchParamProps) => {
             <section className="wrapper mt-8 flex flex-col md:flex-row gap-5 ">
                 <Search
                     placeholder="Search booker name..."
-                    urlParamName="userId"
+                    urlParamName="userName"
                 />
 
                 <Search

@@ -226,6 +226,8 @@ export type isAlreadyOrderedParams = {
 export type GetOrdersByEventParams = {
     eventId: string
     searchString: string
+    userName?: string
+    email?: string
 }
 export type getCurrentOrderByEventAndUserParams = {
     eventId: string
