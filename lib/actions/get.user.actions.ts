@@ -30,7 +30,7 @@ export async function getAllUsers({
     //     },
     // })
 
-    if ((query.length > 0, location.length > 0)) {
+    if (query.length > 0 || location.length > 0) {
         page = 1
     }
 
