@@ -33,17 +33,17 @@ export const formatDateTime = (dateString: Date) => {
     }
 
     const formattedDateTime: string = new Date(dateString).toLocaleString(
-        'kk_KZ',
+        'en-US',
         dateTimeOptions
     )
 
     const formattedDate: string = new Date(dateString).toLocaleString(
-        'kk_KZ',
+        'en-US',
         dateOptions
     )
 
     const formattedTime: string = new Date(dateString).toLocaleString(
-        'kk_KZ',
+        'en-US',
         timeOptions
     )
 
