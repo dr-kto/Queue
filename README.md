@@ -1,4 +1,30 @@
 <div align="center">
+  <h3 align="center">SCREENSHOTS</h3>
+  <div>
+    <img src="https://raw.githubusercontent.com/dr-kto/Queue/main/public/assets/images/screen1.jpg" alt="screenshot" />
+    <img src="https://raw.githubusercontent.com/dr-kto/Queue/main/public/assets/images/screen2.jpg" alt="screenshot" />
+    <img src="https://raw.githubusercontent.com/dr-kto/Queue/main/public/assets/images/screen3.jpg" alt="screenshot" />
+    <img src="https://raw.githubusercontent.com/dr-kto/Queue/main/public/assets/images/screen4.jpg" alt="screenshot" />
+    <img src="https://raw.githubusercontent.com/dr-kto/Queue/main/public/assets/images/screen5.jpg" alt="screenshot" />
+    <img src="https://raw.githubusercontent.com/dr-kto/Queue/main/public/assets/images/screen6.jpg" alt="screenshot" />
+    <img src="https://raw.githubusercontent.com/dr-kto/Queue/main/public/assets/images/screen7.jpg" alt="screenshot" />
+    <img src="https://raw.githubusercontent.com/dr-kto/Queue/main/public/assets/images/screen8.jpg" alt="screenshot" />
+    <img src="https://raw.githubusercontent.com/dr-kto/Queue/main/public/assets/images/screen9.jpg" alt="screenshot" />
+    <img src="https://raw.githubusercontent.com/dr-kto/Queue/main/public/assets/images/screen10.jpg" alt="screenshot" />
+    <img src="https://raw.githubusercontent.com/dr-kto/Queue/main/public/assets/images/screen11.jpg" alt="screenshot" />
+    <img src="https://raw.githubusercontent.com/dr-kto/Queue/main/public/assets/images/screen12.jpg" alt="screenshot" />
+    <img src="https://raw.githubusercontent.com/dr-kto/Queue/main/public/assets/images/screen13.jpg" alt="screenshot" />
+    <img src="https://raw.githubusercontent.com/dr-kto/Queue/main/public/assets/images/screen14.jpg" alt="screenshot" />
+    <img src="https://raw.githubusercontent.com/dr-kto/Queue/main/public/assets/images/screen15.jpg" alt="screenshot" />
+    <img src="https://raw.githubusercontent.com/dr-kto/Queue/main/public/assets/images/screen16.jpg" alt="screenshot" />
+    <img src="https://raw.githubusercontent.com/dr-kto/Queue/main/public/assets/images/screen17.jpg" alt="screenshot" />
+    <img src="https://raw.githubusercontent.com/dr-kto/Queue/main/public/assets/images/screen18.jpg" alt="screenshot" />
+    <img src="https://raw.githubusercontent.com/dr-kto/Queue/main/public/assets/images/screen19.jpg" alt="screenshot" />
+    <img src="https://raw.githubusercontent.com/dr-kto/Queue/main/public/assets/images/screen20.jpg" alt="screenshot" />
+  </div>
+</div>
+
+<div align="center">
   <br />
     <a href="https://youtu.be/zgGhzuBZOQg" target="_blank">
       <img src="https://github.com/adrianhajdin/event_platform/assets/151519281/548975af-f0ed-4103-8834-fe93cf91862e" alt="Project Banner">
